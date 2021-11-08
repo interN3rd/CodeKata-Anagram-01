@@ -5,4 +5,6 @@ public class AppConstants {
     static final String welcomeMessage = "Welcome to Anagram 101!";
     static final String aboutAnagram = "This program tells you to type in any word. Please type in any word then. The application validates your input, searches for anagrams and prints any results to the console.\n";
     static final String errorMSGInputNotValidated = "Could not validate user input. You probably typed in non-alphabetical characters.";
+    static final String noAnagramToBeFound = "There is no anagram for this word.";
+    static final String pathToWordlist = "src/main/resources/english_words_alpha.txt";
 }

@@ -17,7 +17,13 @@ public class Validator {
             "clam", "clay", "cloud", "cola", "cone", "cool", "cork", "crap", "dads", "deaf", "dear", "dial", "dice",
             "diet", "disk", "doom", "east", "eats", "edit", "egos", "evil", "face", "fade", "fast", "fats", "fear",
             "feat", "feel", "felt", "fist", "flee", "flog", "form", "fowl", "from", "fuel", "gabs", "gasp", "gels",
-            "gods", "grab", "gulp", "hate"
+            "gods", "grab", "gulp", "hate", "heir", "hewn", "hoes", "host", "hubs", "icon", "idea", "idle", "inch",
+            "inks", "item", "jest", "juts", "kale", "keen", "kiln", "kiss", "knee", "lags", "lake", "lamb", "lamp",
+            "laps", "last", "lays", "lead", "leak", "leek", "left", "legs", "liar", "lied", "lime", "link", "lips",
+            "list", "loco", "loin", "loot", "lots", "lump", "lure", "mace", "maps", "mare", "mars", "mats", "mean",
+            "meat", "mono", "moon", "mush", "near", "neon", "node", "note", "nude", "once", "ours", "pace", "pale",
+            "palm", "pear", "peat", "pier", "pins", "plug", "pore", "pots", "race", "rats", "realm", "reap", "rear",
+            "reef", "ring", "room", "rope"
 
     };
 
