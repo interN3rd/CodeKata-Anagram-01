@@ -37,6 +37,22 @@ public class ApplicationTest {
 
     }
 
+    @Test
+    @DisplayName( "word that has no anagram")
+    void testWordThatHasNoAnagram() {
+
+        Assertions.assertFalse( Validator.hasAnagrams( "hello" ));
+
+        }
+
+    @Test
+    @DisplayName( "word that hast at least one anagram")
+    void testWordThatHasAtLeastOneAnagram() {
+
+        Assertions.assertTrue( Validator.hasAnagrams( "bowl" ));
+
+    }
+
     @AfterEach
     public void afterEach() {
 
