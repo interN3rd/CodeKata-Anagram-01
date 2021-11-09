@@ -3,3 +3,7 @@ It took 3818ms to run the anagram program for the word holz.It took 2979ms to ru
 It took 2301ms to run the anagram program for the word bowl.
 
 It took 2716ms to run the anagram program for the word love.
+
+It took 3849ms to run the anagram program for the word bowl.
+
+It took 2906ms to run the anagram program for the word bowl.

@@ -6,16 +6,19 @@ import java.util.*;
 
 public class Anagram {
 
-    // attributes
     private final String originalWord;
 
-    // getter & setter
     public String getOriginalWord() {
         return originalWord;
     }
 
     // constructor is being called after input validation so it's safer to work with
     public Anagram( String originalWord ) {
+
+        if( !Validator.isValidUserInput( originalWord ) ) {
+            throw new IllegalArgumentException( "An illegal argument was passed to constructor of class Anagram.");
+        }
+
         this.originalWord = originalWord;
     }
 
@@ -26,6 +29,9 @@ public class Anagram {
      * words with a wordlist to identify existing anagrams
      */
     static List<String> buildWords(String originalWord) {
+        if( !Validator.isValidUserInput( originalWord ) ) {
+            throw new IllegalArgumentException( "An illegal argument was passed to constructor of class Anagram.");
+        }
         List<String> possibleAnagrams = new ArrayList<>();
         if( originalWord.length() == 1 ) {
             possibleAnagrams.add( originalWord );
