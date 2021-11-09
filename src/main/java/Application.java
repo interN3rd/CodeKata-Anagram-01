@@ -1,10 +1,23 @@
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class Application {
 
     public static void main( String[] args ) throws IOException {
 
+        File log = new File( "logfile.txt" );
+        try {
+            if( !log.exists() ) {
+                log.createNewFile();
+            }
+        } catch( IOException e ) {
+            e.printStackTrace();
+        }
+
+        long start = System.currentTimeMillis();
         String userInput = "";
         int errorCount = 0;
         int inputAttempt = 0;
@@ -43,8 +56,30 @@ public class Application {
         // at this point the user input is validated so it's safer to work with
         if( Validator.isNullOrEmpty( Anagram.findAnagrams( Anagram.buildWords( userInput ) ) ) ) {
             System.out.println( "There are no anagrams for " + userInput + "." );
+            long executionTime = System.currentTimeMillis() - start;
+            System.out.println( "This program ran for " + executionTime + "ms.");
+            try {
+
+                PrintWriter logWriter = new PrintWriter( new FileWriter( "logfile.txt", true ) );
+                logWriter.append("\nIt took ").append(String.valueOf(executionTime)).append("ms to run the anagram program for the word ").append(userInput).append(".\n");
+                logWriter.close();
+
+            } catch( IOException e) {
+                e.printStackTrace();
+            }
         } else {
             System.out.println( "Anagrams of " + userInput + ": " + Anagram.findAnagrams( Anagram.buildWords( userInput ) ) );
+            long executionTime = System.currentTimeMillis() - start;
+            System.out.println( "This program ran for " + executionTime + "ms.");
+            try {
+
+                PrintWriter logWriter = new PrintWriter( new FileWriter( "logfile.txt", true ) );
+                logWriter.append("\nIt took ").append(String.valueOf(executionTime)).append("ms to run the anagram program for the word ").append(userInput).append(".\n");
+                logWriter.close();
+
+            } catch( IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

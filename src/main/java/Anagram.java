@@ -51,8 +51,9 @@ public class Anagram {
                 anagrams.add(anagram);
             }
         }
-        if( anagrams.get( 0 ).equals( anagrams.get( 1 ) ) ) {
-            return emptyResult;
+
+        if( Validator.isNullOrEmpty( anagrams ) || anagrams.get( 0 ).equals( anagrams.get( 1 ) ) ) {
+                return emptyResult;
         }
         return anagrams;
     }

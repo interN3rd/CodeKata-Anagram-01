@@ -1,0 +1,5 @@
+It took 3818ms to run the anagram program for the word holz.It took 2979ms to run the anagram program for the word am.It took 3222ms to run the anagram program for the word left.
+
+It took 2301ms to run the anagram program for the word bowl.
+
+It took 2716ms to run the anagram program for the word love.
