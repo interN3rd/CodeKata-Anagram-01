@@ -5,6 +5,10 @@ public class Application {
 
     public static void main( String[] args ) throws IOException {
 
+        String userInput = "";
+        int errorCount = 0;
+        int inputAttempt = 0;
+
         // the user is told about the application, how to use it and what to expect from it
         System.out.println( AppConstants.headline );
         System.out.println( AppConstants.welcomeMessage );
@@ -12,25 +16,35 @@ public class Application {
 
         // the user interacts with the application: the user is told to type in any word
         Scanner scanner = new Scanner( System.in );
-        System.out.println( "Please type in any word: " );
-        String userInput = scanner.nextLine();
+        while( errorCount <= 3 ) {
+            inputAttempt += 1;
+            if( errorCount == 3 ) {
+                System.out.println( "Could still not validate your input after three attempts. Please try again later.");
+                try {
+                    Thread.sleep( 1000 * 60 * 60 );
+                    System.exit( 1 );
+                } catch( InterruptedException exception ) {
+                    exception.printStackTrace();
+                }
+            }
 
-        // user input has to be validated
-        if( !Validator.isValidUserInput( userInput ) ) {
+            System.out.println( "Please type in any word: " );
+            userInput = scanner.nextLine();
+            if( !Validator.isValidUserInput( userInput ) ) {
+                System.out.println("Warning: You entered non-alphabetical characters. Please try again. Attempt " + inputAttempt + " / 3.");
+                errorCount += 1;
+                continue;
+            }
 
-            System.out.println( AppConstants.errorMSGInputNotValidated );
-            System.exit( 1 );
+            scanner.close();
+            break;
+        }
 
+        // at this point the user input is validated so it's safer to work with
+        if( Validator.isNullOrEmpty( Anagram.findAnagrams( Anagram.buildWords( userInput ) ) ) ) {
+            System.out.println( "There are no anagrams for " + userInput + "." );
         } else {
-
-            Anagram anagram = new Anagram( userInput );
-            anagram.start();
-            // Do this:
-            // System.out.println( "Anagrams of "  + "\"" + anagram.getOriginalWord() + "\": " + anagram.findAnagrams( anagram.buildWords( anagram.getOriginalWord().toLowerCase( Locale.ROOT ) ) ) );
-            // and input something like "pqoaieghqaoifajowfjq" and you have enough time to get coffee. And by "get coffee" I mean fly to Columbia, plant a coffee plant, fight the drug cartel, harvest one coffee bean,
-            // take it back to your place, ask grandma whether it smells okay, fly back to Columbia, harvest the other coffee beans, fly back to your place, build your own coffee machine from scratch and finally make
-            // that damn coffee ...
-
+            System.out.println( "Anagrams of " + userInput + ": " + Anagram.findAnagrams( Anagram.buildWords( userInput ) ) );
         }
     }
 }
