@@ -28,9 +28,9 @@ public class Anagram {
      * @return String array that contains every possible "word" from the given char array; goal is to compare created
      * words with a wordlist to identify existing anagrams
      */
-    static List<String> buildWords(String originalWord) {
+    static List<String> buildWords( final String originalWord ) {
         if( !Validator.isValidUserInput( originalWord ) ) {
-            throw new IllegalArgumentException( "An illegal argument was passed to constructor of class Anagram.");
+            throw new IllegalArgumentException( "An illegal argument was passed to parameter list of method buildWords().");
         }
         List<String> possibleAnagrams = new ArrayList<>();
         if( originalWord.length() == 1 ) {
@@ -48,9 +48,12 @@ public class Anagram {
         return possibleAnagrams;
     }
 
-    static List<String> findAnagrams( List<String> possibleAnagrams ) throws IOException {
-        List<String> anagrams = new ArrayList<>();
+    static List<String> findAnagrams( final List<String> possibleAnagrams ) throws IOException {
+        if( possibleAnagrams.get( 0 ).length() == 1 ) {
+            throw new IllegalArgumentException( "An illegal argument was passed to parameter list of method findAnagrams()." );
+        }
         List<String> emptyResult = new ArrayList<>();
+        List<String> anagrams = new ArrayList<>();
         List<String> wordList = Files.readAllLines( Paths.get( AppConstants.pathToWordlist ), StandardCharsets.UTF_8 );
         for (String anagram : possibleAnagrams) {
             if (wordList.contains(anagram)) {
@@ -58,9 +61,11 @@ public class Anagram {
             }
         }
 
-        if( Validator.isNullOrEmpty( anagrams ) || anagrams.get( 0 ).equals( anagrams.get( 1 ) ) ) {
-                return emptyResult;
+        // "hello" has no anagrams, but at this point anagrams consists of [hello, hello]
+        if( anagrams.get( 0 ).equals( anagrams.get( 1 ) ) ) {
+            return emptyResult;
         }
+
         return anagrams;
     }
 }

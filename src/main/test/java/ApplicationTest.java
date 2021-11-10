@@ -73,8 +73,39 @@ public class ApplicationTest {
     @DisplayName( "test buildWords(): good case" )
     void testMethodBuildWords() {
         Anagram anagram = new Anagram( "bowl");
-        Anagram.buildWords(anagram.getOriginalWord() );
-        Assertions.assertFalse( Validator.isNullOrEmpty(Anagram.buildWords(anagram.getOriginalWord() )));
+        Assertions.assertEquals( "bowl", anagram.getOriginalWord() );
+        List<String> result = Anagram.buildWords( anagram.getOriginalWord() );
+        Assertions.assertFalse( result.isEmpty() );
+        Assertions.assertEquals( 24, result.size() );
+
+        Assertions.assertEquals( "bowl", result.get(0) );
+        Assertions.assertEquals( "bolw", result.get(1) );
+        Assertions.assertEquals( "bwol", result.get(2) );
+        Assertions.assertEquals( "bwlo", result.get(3) );
+        Assertions.assertEquals( "blow", result.get(4) );
+        Assertions.assertEquals( "blwo", result.get(5) );
+
+        Assertions.assertEquals( "obwl", result.get(6) );
+        Assertions.assertEquals( "oblw", result.get(7) );
+        Assertions.assertEquals( "owbl", result.get(8) );
+        Assertions.assertEquals( "owlb", result.get(9) );
+        Assertions.assertEquals( "olbw", result.get(10) );
+        Assertions.assertEquals( "olwb", result.get(11) );
+
+        Assertions.assertEquals( "wbol", result.get(12) );
+        Assertions.assertEquals( "wblo", result.get(13) );
+        Assertions.assertEquals( "wobl", result.get(14) );
+        Assertions.assertEquals( "wolb", result.get(15) );
+        Assertions.assertEquals( "wlbo", result.get(16) );
+        Assertions.assertEquals( "wlob", result.get(17) );
+
+        Assertions.assertEquals( "lbow", result.get(18) );
+        Assertions.assertEquals( "lbwo", result.get(19) );
+        Assertions.assertEquals( "lobw", result.get(20) );
+        Assertions.assertEquals( "lowb", result.get(21) );
+        Assertions.assertEquals( "lwbo", result.get(22) );
+        Assertions.assertEquals( "lwob", result.get(23) );
+
     }
 
     @Test
@@ -86,27 +117,40 @@ public class ApplicationTest {
     @Test
     @DisplayName( "test findAnagrams(): good case" )
     void testMethodFindAnagrams() throws IOException {
-        Assertions.assertFalse( Validator.isNullOrEmpty( Anagram.findAnagrams(Anagram.buildWords( "bowl") ) ) );
+        Anagram anagram = new Anagram( "left");
+        Assertions.assertEquals( "left", anagram.getOriginalWord() );
+        List<String> possibleAnagrams = Anagram.buildWords( anagram.getOriginalWord() );
+        List<String> result = Anagram.findAnagrams( possibleAnagrams );
+
+        Assertions.assertFalse( result.isEmpty() );
+        Assertions.assertEquals( 3, result.size() );
+        Assertions.assertEquals( "left", result.get( 0 ) );
+        Assertions.assertEquals( "flet", result.get( 1 ) );
+        Assertions.assertEquals( "felt", result.get( 2 ) );
     }
 
     @Test
-    @DisplayName( "test findAnagrams(): no anagram found" )
+    @DisplayName( "test findAnagrams(): no anagram found for existing word" )
     void testMethodFindAnagramsWithHello() throws IOException {
         List<String> possibleAnagrams = Anagram.buildWords( "hello");
-        List<String> anagrams = new ArrayList<>();
-        List<String> wordList = Files.readAllLines( Paths.get( AppConstants.pathToWordlist ), StandardCharsets.UTF_8 );
-        for (String anagram : possibleAnagrams) {
-            if (wordList.contains(anagram)) {
-                anagrams.add(anagram);
-            }
-        }
-        Assertions.assertEquals( anagrams.get( 0 ), anagrams.get( 1 ) );
+        List<String> result = Anagram.findAnagrams( possibleAnagrams );
+        Assertions.assertTrue( result.isEmpty() );
     }
 
     @Test
-    @DisplayName( "test findAnagrams(): not even a word" )
+    @DisplayName( "test findAnagrams(): no anagram found for not existing word" )
     void testMethodFindAnagramsWithNotEvenAWord() throws IOException {
-        Assertions.assertTrue( Validator.isNullOrEmpty( Anagram.findAnagrams(Anagram.buildWords( "yadayada") ) ) );
+        List<String> possibleAnagrams = Anagram.buildWords( "yadayada");
+        List<String> result = Anagram.findAnagrams( possibleAnagrams );
+        Assertions.assertTrue( result.isEmpty() );
+    }
+
+    @Test
+    @DisplayName( "test findAnagrams(): illegal argument" )
+    void testMethodFindAnagramsWithIllegalArgument() throws IOException {
+        List<String> input = new ArrayList<>();
+        input.add( "a" );
+        Assertions.assertThrows( IllegalArgumentException.class, ()-> Anagram.findAnagrams( input ) );
     }
 
     @AfterEach

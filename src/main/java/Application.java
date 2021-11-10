@@ -2,12 +2,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Scanner;
 
 public class Application {
 
     public static void main( String[] args ) throws IOException {
-
         File log = new File( "logfile.txt" );
         try {
             if( !log.exists() ) {
@@ -40,7 +40,6 @@ public class Application {
                     exception.printStackTrace();
                 }
             }
-
             System.out.println( "Please type in any word: " );
             userInput = scanner.nextLine();
             if( !Validator.isValidUserInput( userInput ) ) {
@@ -48,35 +47,38 @@ public class Application {
                 errorCount += 1;
                 continue;
             }
-
             scanner.close();
             break;
         }
+        // do not waste resources when it's obvious that all coming methods don't need to process user input
+        if( userInput.length() == 1 ) {
+            System.out.println( "There are no anagrams for " + userInput + "." );
+            System.exit( 1 );
+        }
 
         // at this point the user input is validated so it's safer to work with
-        if( Validator.isNullOrEmpty( Anagram.findAnagrams( Anagram.buildWords( userInput ) ) ) ) {
+        Anagram anagram = new Anagram( userInput );
+        List<String> possibleAnagrams = Anagram.buildWords( anagram.getOriginalWord() );
+        List<String> anagrams = Anagram.findAnagrams( possibleAnagrams );
+        if( anagrams.isEmpty() ) {
             System.out.println( "There are no anagrams for " + userInput + "." );
             long executionTime = System.currentTimeMillis() - start;
             System.out.println( "This program ran for " + executionTime + "ms.");
             try {
-
                 PrintWriter logWriter = new PrintWriter( new FileWriter( "logfile.txt", true ) );
                 logWriter.append("\nIt took ").append(String.valueOf(executionTime)).append("ms to run the anagram program for the word ").append(userInput).append(".\n");
                 logWriter.close();
-
             } catch( IOException e) {
                 e.printStackTrace();
             }
         } else {
-            System.out.println( "Anagrams of " + userInput + ": " + Anagram.findAnagrams( Anagram.buildWords( userInput ) ) );
+            System.out.println( "Anagrams of " + userInput + ": " + anagrams );
             long executionTime = System.currentTimeMillis() - start;
             System.out.println( "This program ran for " + executionTime + "ms.");
             try {
-
                 PrintWriter logWriter = new PrintWriter( new FileWriter( "logfile.txt", true ) );
                 logWriter.append("\nIt took ").append(String.valueOf(executionTime)).append("ms to run the anagram program for the word ").append(userInput).append(".\n");
                 logWriter.close();
-
             } catch( IOException e) {
                 e.printStackTrace();
             }

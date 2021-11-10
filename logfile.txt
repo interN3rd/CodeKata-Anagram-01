@@ -7,3 +7,21 @@ It took 2716ms to run the anagram program for the word love.
 It took 3849ms to run the anagram program for the word bowl.
 
 It took 2906ms to run the anagram program for the word bowl.
+
+It took 3596ms to run the anagram program for the word bowl.
+
+It took 2704ms to run the anagram program for the word left.
+
+It took 3818ms to run the anagram program for the word hello.
+
+It took 2661ms to run the anagram program for the word hello.
+
+It took 3638ms to run the anagram program for the word hello.
+
+It took 2067ms to run the anagram program for the word bowl.
+
+It took 3182ms to run the anagram program for the word bowl.
+
+It took 1745ms to run the anagram program for the word a.
+
+It took 2069ms to run the anagram program for the word aa.
