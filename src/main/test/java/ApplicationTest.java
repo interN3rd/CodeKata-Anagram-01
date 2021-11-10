@@ -18,13 +18,6 @@ public class ApplicationTest {
     }
 
     @Test
-    @DisplayName( "test whether logfile exists" )
-    void testFileExistence() {
-        File log = new File( "logfile.txt" );
-        Assertions.assertTrue( log.exists() );
-    }
-
-    @Test
     @DisplayName( "test input validation: expected behavior" )
     void testInputValidationGoodCase() {
         String userInput = "lowercase";
@@ -154,6 +147,13 @@ public class ApplicationTest {
         List<String> input = new ArrayList<>();
         input.add( "i4m!ll3gal$" );
         Assertions.assertThrows( IllegalArgumentException.class, ()-> Anagram.findAnagrams( input ) );
+    }
+
+    @Test
+    @DisplayName( "test whether logfile exists" )
+    void testFileExistence() {
+        File log = new File( "logfile.txt" );
+        Assertions.assertTrue( log.exists() );
     }
 
     @AfterEach
