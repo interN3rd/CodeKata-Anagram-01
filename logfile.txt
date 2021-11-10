@@ -25,3 +25,23 @@ It took 3182ms to run the anagram program for the word bowl.
 It took 1745ms to run the anagram program for the word a.
 
 It took 2069ms to run the anagram program for the word aa.
+
+It took 3113ms to run the anagram program for the word bowl.
+
+It took 2391ms to run the anagram program for the word bowl.
+
+It took 2205ms to run the anagram program for the word left.
+
+It took 2295ms to run the anagram program for the word left.
+
+It took 2624ms to run the anagram program for the word left.
+
+It took 2474ms to run the anagram program for the word bowl.
+
+It took 136736ms to run the anagram program for the word bowl.
+
+It took 2062ms to run the anagram program for the word blow.
+
+It took 63811ms to run the anagram program for the word yadayada.
+
+It took 2839ms to run the anagram program for the word left.

@@ -72,7 +72,7 @@ public class Application {
                 e.printStackTrace();
             }
         } else {
-            System.out.println( "Anagrams of " + userInput + ": " + anagrams );
+            System.out.println( "Anagrams of " + userInput + ": " + anagrams.toString().replace( "[", "").replace( "]", "") );
             long executionTime = System.currentTimeMillis() - start;
             System.out.println( "This program ran for " + executionTime + "ms.");
             try {

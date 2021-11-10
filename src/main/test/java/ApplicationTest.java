@@ -1,10 +1,6 @@
 import org.junit.jupiter.api.*;
-
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,10 +119,9 @@ public class ApplicationTest {
         List<String> result = Anagram.findAnagrams( possibleAnagrams );
 
         Assertions.assertFalse( result.isEmpty() );
-        Assertions.assertEquals( 3, result.size() );
-        Assertions.assertEquals( "left", result.get( 0 ) );
-        Assertions.assertEquals( "flet", result.get( 1 ) );
-        Assertions.assertEquals( "felt", result.get( 2 ) );
+        Assertions.assertEquals( 2, result.size() );
+        Assertions.assertEquals( "flet", result.get( 0 ) );
+        Assertions.assertEquals( "felt", result.get( 1 ) );
     }
 
     @Test
@@ -147,9 +142,17 @@ public class ApplicationTest {
 
     @Test
     @DisplayName( "test findAnagrams(): illegal argument" )
-    void testMethodFindAnagramsWithIllegalArgument() throws IOException {
+    void testMethodFindAnagramsWithIllegalArgument() {
         List<String> input = new ArrayList<>();
         input.add( "a" );
+        Assertions.assertThrows( IllegalArgumentException.class, ()-> Anagram.findAnagrams( input ) );
+    }
+
+    @Test
+    @DisplayName( "test findAnagrams(): illegal argument with special characters" )
+    void testMethodFindAnagramsWithIllegalArgumentSpecialChars() {
+        List<String> input = new ArrayList<>();
+        input.add( "i4m!ll3gal$" );
         Assertions.assertThrows( IllegalArgumentException.class, ()-> Anagram.findAnagrams( input ) );
     }
 
