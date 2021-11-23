@@ -45,3 +45,75 @@ It took 2062ms to run the anagram program for the word blow.
 It took 63811ms to run the anagram program for the word yadayada.
 
 It took 2839ms to run the anagram program for the word left.
+
+It took 4219ms to run the anagram program for the word bowl.
+
+It took 80ms to run the anagram program for the word bowl.
+
+It took 77ms to run the anagram program for the word bowl.
+
+It took 6614ms to run the anagram program for the word bowl.
+
+It took 82ms to run the anagram program for the word bowl.
+
+It took 225ms to run the anagram program for the word hello.
+
+It took 87ms to run the anagram program for the word bowl.
+
+It took 185ms to run the anagram program for the word hello.
+
+It took 74ms to run the anagram program for the word bowl.
+
+It took 76ms to run the anagram program for the word bowl.
+
+It took 71ms to run the anagram program for the word left.
+
+It took 77ms to run the anagram program for the word bowl.
+
+It took 0ms to run the anagram program for the word bowl.
+
+It took 58ms to run the anagram program for the word yadayada.
+
+It took 0ms to run the anagram program for the word bowl.
+
+It took 0ms to run the anagram program for the word bowl.
+
+It took 0ms to run the anagram program for the word blow.
+
+It took 57ms to run the anagram program for the word yadayada.
+
+It took 0ms to run the anagram program for the word bowl.
+
+It took 0ms to run the anagram program for the word bowl.
+
+It took 0ms to run the anagram program for the word bowl.
+
+It took 0ms to run the anagram program for the word bowl.
+
+It took 0ms to run the anagram program for the word bowl.
+
+It took 0ms to run the anagram program for the word a.
+
+It took 0ms to run the anagram program for the word a.
+
+It took 0ms to run the anagram program for the word left.
+
+It took 0ms to run the anagram program for the word bowl.
+
+It took 0ms to run the anagram program for the word bowl.
+
+It took 0ms to run the anagram program for the word left.
+
+It took 0ms to run the anagram program for the word left.
+
+It took 0ms to run the anagram program for the word left.
+
+It took 175ms to run the anagram program for the word left.
+
+It took 0ms to run the anagram program for the word left.
+
+It took 0ms to run the anagram program for the word bowl.
+
+It took 0ms to run the anagram program for the word left.
+
+It took 0ms to run the anagram program for the word left.
