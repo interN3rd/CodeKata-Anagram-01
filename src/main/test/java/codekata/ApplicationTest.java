@@ -1,44 +1,39 @@
+package codekata;
+
 import org.junit.jupiter.api.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 @DisplayName( "AnagramTest" )
 public class ApplicationTest {
     @Test
-    @DisplayName( "test createFile(): file exists" )
-    void testMethodCreateFile() {
-        File log = Application.createLogfile("logfile.txt" );
-        Assertions.assertTrue( log.exists() );
-    }
-    @Test
     @DisplayName( "test input validation: good case, testing valid input" )
     void testInputValidationGoodCase() {
         String userInput = "lowercase";
-        Assertions.assertTrue( Application.isValid( userInput ) );
+        Assertions.assertTrue( AnagramByWordlistLookup.isValid( userInput ) );
         userInput = "UPPERCASE";
-        Assertions.assertTrue( Application.isValid( userInput ) );
+        Assertions.assertTrue( AnagramByWordlistLookup.isValid( userInput ) );
         userInput = "lowerCamelCaseIsGoodCase";
-        Assertions.assertTrue( Application.isValid( userInput ) );
+        Assertions.assertTrue( AnagramByWordlistLookup.isValid( userInput ) );
         userInput = "PascalCaseIsBestestCaseVongNamenHer";
-        Assertions.assertTrue( Application.isValid( userInput ) );
+        Assertions.assertTrue( AnagramByWordlistLookup.isValid( userInput ) );
     }
     @Test
     @DisplayName( "test input validation: bad case, testing special characters and numbers" )
     void testInputValidationBadInput() {
         String badUserInput = ".jsp\\0.html";
-        Assertions.assertFalse( Application.isValid( badUserInput ) );
+        Assertions.assertFalse( AnagramByWordlistLookup.isValid( badUserInput ) );
         badUserInput = "Hello!";
-        Assertions.assertFalse( Application.isValid( badUserInput ) );
+        Assertions.assertFalse( AnagramByWordlistLookup.isValid( badUserInput ) );
         badUserInput = "iC4nC0untFr0m1To99";
-        Assertions.assertFalse( Application.isValid( badUserInput ) );
+        Assertions.assertFalse( AnagramByWordlistLookup.isValid( badUserInput ) );
         badUserInput = "PascalCaseIsBestestCase,VongNamenHer";
-        Assertions.assertFalse( Application.isValid( badUserInput ) );
+        Assertions.assertFalse( AnagramByWordlistLookup.isValid( badUserInput ) );
     }
     @Test
     @DisplayName( "test buildWords(): good case" )
     void testMethodBuildWords() {
-        List<String> result = Application.buildWords( "bowl" );
+        List<String> result = AnagramByWordlistLookup.buildWords( "bowl" );
         Assertions.assertFalse( result.isEmpty() );
         Assertions.assertEquals( 24, result.size() );
         Assertions.assertTrue( result.contains( "bowl" ) );
@@ -70,12 +65,13 @@ public class ApplicationTest {
     @Test
     @DisplayName( "test buildWords(): illegal argument" )
     void testMethodBuildWordsWithIllegalArgument() {
-        Assertions.assertThrows( IllegalArgumentException.class, ()-> Application.buildWords( "i4m!ll3gal$"));
+        Assertions.assertThrows( IllegalArgumentException.class, ()-> AnagramByWordlistLookup.buildWords( "i4m!ll3gal$"));
     }
     @Test
     @DisplayName( "test findAnagrams(): good case" )
     void testMethodFindAnagrams() throws IOException {
-        List<String> result = Application.findAnagrams( "left" );
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
+        List<String> result = anagramByWordlistLookup.findAnagrams( "left" );
 
         Assertions.assertFalse( result.isEmpty() );
         Assertions.assertEquals( 2, result.size() );
@@ -86,24 +82,28 @@ public class ApplicationTest {
     @Test
     @DisplayName( "test findAnagrams(): no anagram found for existing word" )
     void testMethodFindAnagramsWithHello() throws IOException {
-        List<String> result = Application.findAnagrams( "hello" );
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
+        List<String> result = anagramByWordlistLookup.findAnagrams( "hello" );
         Assertions.assertTrue( result.isEmpty() );
     }
     @Test
     @DisplayName( "test findAnagrams(): no anagram found for not existing word" )
     void testMethodFindAnagramsWithNotEvenAWord() throws IOException {
-        List<String> result = Application.findAnagrams( "yadayada" );
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
+        List<String> result = anagramByWordlistLookup.findAnagrams( "yadayada" );
         Assertions.assertTrue( result.isEmpty() );
     }
     @Test
     @DisplayName( "test findAnagrams(): illegal argument" )
     void testMethodFindAnagramsWithIllegalArgument() throws IOException {
-        List<String> result = Application.findAnagrams( "a" );
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
+        List<String> result = anagramByWordlistLookup.findAnagrams( "a" );
         Assertions.assertTrue( result.isEmpty() );
     }
     @Test
     @DisplayName( "test findAnagrams(): illegal argument with special characters" )
     void testMethodFindAnagramsWithIllegalArgumentSpecialChars() {
-        Assertions.assertThrows( IllegalArgumentException.class, ()-> Application.findAnagrams( "i4m!ll3gal$" ) );
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
+        Assertions.assertThrows( IllegalArgumentException.class, ()-> anagramByWordlistLookup.findAnagrams( "i4m!ll3gal$" ) );
     }
 }

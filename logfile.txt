@@ -117,3 +117,13 @@ It took 0ms to run the anagram program for the word bowl.
 It took 0ms to run the anagram program for the word left.
 
 It took 0ms to run the anagram program for the word left.
+
+It took 0ms to run the anagram program for the word tent.
+
+It took 0ms to run the anagram program for the word bowl.
+
+It took 0ms to run the anagram program for the word left.
+
+It took 0ms to run the anagram program for the word bowl.
+
+It took 0ms to run the anagram program for the word bowl.
