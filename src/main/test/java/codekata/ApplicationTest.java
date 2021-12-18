@@ -7,6 +7,16 @@ import java.util.List;
 @DisplayName( "AnagramTest" )
 public class ApplicationTest {
     @Test
+    @DisplayName( "test constructor: illegal argument with special characters" )
+    void testConstructorWithIllegalArgumentSpecialChars() {
+        Assertions.assertThrows( IllegalArgumentException.class, ()-> new AnagramByWordlistLookup("i4m!ll3gal$") );
+    }
+    @Test
+    @DisplayName( "test constructor: illegal argument with only one character" )
+    void testConstructorWithIllegalArgumentOneChar() {
+        Assertions.assertThrows( IllegalArgumentException.class, ()-> new AnagramByWordlistLookup("a") );
+    }
+    @Test
     @DisplayName( "test input validation: good case, testing valid input" )
     void testInputValidationGoodCase() {
         String userInput = "lowercase";
@@ -70,8 +80,9 @@ public class ApplicationTest {
     @Test
     @DisplayName( "test findAnagrams(): good case" )
     void testMethodFindAnagrams() throws IOException {
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
-        List<String> result = anagramByWordlistLookup.findAnagrams( "left" );
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup("left");
+        String userInput = anagramByWordlistLookup.getOrigin();
+        List<String> result = anagramByWordlistLookup.findAnagrams(userInput);
 
         Assertions.assertFalse( result.isEmpty() );
         Assertions.assertEquals( 2, result.size() );
@@ -82,28 +93,34 @@ public class ApplicationTest {
     @Test
     @DisplayName( "test findAnagrams(): no anagram found for existing word" )
     void testMethodFindAnagramsWithHello() throws IOException {
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
-        List<String> result = anagramByWordlistLookup.findAnagrams( "hello" );
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup("hello");
+        String userInput = anagramByWordlistLookup.getOrigin();
+        List<String> result = anagramByWordlistLookup.findAnagrams( userInput );
         Assertions.assertTrue( result.isEmpty() );
     }
     @Test
     @DisplayName( "test findAnagrams(): no anagram found for not existing word" )
     void testMethodFindAnagramsWithNotEvenAWord() throws IOException {
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
-        List<String> result = anagramByWordlistLookup.findAnagrams( "yadayada" );
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup("yadayada");
+        String userInput = anagramByWordlistLookup.getOrigin();
+        List<String> result = anagramByWordlistLookup.findAnagrams( userInput );
         Assertions.assertTrue( result.isEmpty() );
     }
     @Test
     @DisplayName( "test findAnagrams(): illegal argument" )
-    void testMethodFindAnagramsWithIllegalArgument() throws IOException {
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
-        List<String> result = anagramByWordlistLookup.findAnagrams( "a" );
+    void testMethodFindAnagramsWithIllegalArgumentOneChar() throws IOException {
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup("a");
+        String userInput = anagramByWordlistLookup.getOrigin();
+        List<String> result = anagramByWordlistLookup.findAnagrams( userInput );
         Assertions.assertTrue( result.isEmpty() );
     }
     @Test
-    @DisplayName( "test findAnagrams(): illegal argument with special characters" )
-    void testMethodFindAnagramsWithIllegalArgumentSpecialChars() {
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
-        Assertions.assertThrows( IllegalArgumentException.class, ()-> anagramByWordlistLookup.findAnagrams( "i4m!ll3gal$" ) );
+    @DisplayName( "test findAnagrams(): illegal argument" )
+    void testMethodFindAnagramsWithIllegalArgumentSpecialChars() throws IOException {
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup("i4m!ll3gal$");
+        String userInput = anagramByWordlistLookup.getOrigin();
+        List<String> result = anagramByWordlistLookup.findAnagrams( userInput );
+        Assertions.assertTrue( result.isEmpty() );
     }
+
 }

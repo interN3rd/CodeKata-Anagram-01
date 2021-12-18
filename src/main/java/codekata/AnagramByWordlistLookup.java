@@ -8,6 +8,30 @@ import java.util.stream.Collectors;
 
 public class AnagramByWordlistLookup implements AnagramBuilder {
 
+    // attributes
+    private String origin;
+
+    // constructor
+    public AnagramByWordlistLookup(String word) {
+        if(word.length() <= 1 ) {
+            throw new IllegalArgumentException("A combination of letters was provided that will never produce an anagram");
+        }
+        if(!isValid(word) ) {
+            throw new IllegalArgumentException( "An illegal argument was passed to constructor.");
+        }
+        this.setOrigin( word );
+    }
+
+    // getter & setter
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    // methods
     public static boolean isValid( final String userInput ) {
         return Pattern.compile( "^[A-Za-z]+$" ).matcher( userInput ).find();
     }
