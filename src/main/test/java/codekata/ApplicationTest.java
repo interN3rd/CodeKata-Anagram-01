@@ -4,17 +4,19 @@ import org.junit.jupiter.api.*;
 import java.io.IOException;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 @DisplayName( "AnagramTest" )
 public class ApplicationTest {
     @Test
     @DisplayName( "test constructor: illegal argument with special characters" )
     void testConstructorWithIllegalArgumentSpecialChars() {
-        Assertions.assertThrows( IllegalArgumentException.class, ()-> new AnagramByWordlistLookup("i4m!ll3gal$") );
+        assertThrows( IllegalArgumentException.class, ()-> new AnagramByWordlistLookup("i4m!ll3gal$") );
     }
     @Test
     @DisplayName( "test constructor: illegal argument with only one character" )
     void testConstructorWithIllegalArgumentOneChar() {
-        Assertions.assertThrows( IllegalArgumentException.class, ()-> new AnagramByWordlistLookup("a") );
+        assertThrows( IllegalArgumentException.class, ()-> new AnagramByWordlistLookup("a") );
     }
     @Test
     @DisplayName( "test input validation: good case, testing valid input" )
@@ -75,7 +77,7 @@ public class ApplicationTest {
     @Test
     @DisplayName( "test buildWords(): illegal argument" )
     void testMethodBuildWordsWithIllegalArgument() {
-        Assertions.assertThrows( IllegalArgumentException.class, ()-> AnagramByWordlistLookup.buildWords( "i4m!ll3gal$"));
+        assertThrows( IllegalArgumentException.class, ()-> AnagramByWordlistLookup.buildWords( "i4m!ll3gal$"));
     }
     @Test
     @DisplayName( "test findAnagrams(): good case" )
@@ -109,18 +111,16 @@ public class ApplicationTest {
     @Test
     @DisplayName( "test findAnagrams(): illegal argument" )
     void testMethodFindAnagramsWithIllegalArgumentOneChar() throws IOException {
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup("a");
-        String userInput = anagramByWordlistLookup.getOrigin();
-        List<String> result = anagramByWordlistLookup.findAnagrams( userInput );
-        Assertions.assertTrue( result.isEmpty() );
+        assertThrows( IllegalArgumentException.class, () -> {
+            AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup("a");
+        });
     }
     @Test
     @DisplayName( "test findAnagrams(): illegal argument" )
     void testMethodFindAnagramsWithIllegalArgumentSpecialChars() throws IOException {
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup("i4m!ll3gal$");
-        String userInput = anagramByWordlistLookup.getOrigin();
-        List<String> result = anagramByWordlistLookup.findAnagrams( userInput );
-        Assertions.assertTrue( result.isEmpty() );
+        assertThrows( IllegalArgumentException.class, () -> {
+            AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup("i4m!ll3gal$");
+        });
     }
 
 }

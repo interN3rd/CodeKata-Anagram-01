@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class AnagramByWordlistLookup implements AnagramBuilder {
+public class AnagramByWordlistLookup implements AnagramFinder {
 
     // attributes
     private String origin;
@@ -76,6 +76,7 @@ public class AnagramByWordlistLookup implements AnagramBuilder {
         List<String> anagrams = new ArrayList<>();
         List<String> wordList;
         try (InputStream stream = AnagramByWordlistLookup.class.getResourceAsStream("/english_words_alpha.txt")) {
+            assert stream != null;
             BufferedReader bufferedReader = new BufferedReader( new InputStreamReader( stream ) );
             wordList = bufferedReader.lines().collect(Collectors.toList());
         }
