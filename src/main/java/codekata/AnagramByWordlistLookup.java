@@ -81,11 +81,20 @@ public class AnagramByWordlistLookup implements AnagramFinder {
             wordList = bufferedReader.lines().collect(Collectors.toList());
         }
 
-        for ( String anagram : possibleAnagrams ) {
-            if ( wordList.contains( anagram ) ) {
-                anagrams.add( anagram );
+        // by definition an anagram consists of the same amount of letters like the original word
+        // example: if the user types in "owl" an anagram would be "low"
+        // both words should be in the wordlist
+        // therefore: if the word doesn't even come up in the wordlist, there will be no anagram
+        if( wordList.contains( userInput) ) {
+            for ( String anagram : possibleAnagrams ) {
+                if ( wordList.contains( anagram ) ) {
+                    anagrams.add( anagram );
+                }
             }
+        } else {
+            return new ArrayList<>();
         }
+
         // "yadayada" is a word that is fully processed but won't produce any anagrams
         if ( anagrams.isEmpty() ) {
             return new ArrayList<>();
