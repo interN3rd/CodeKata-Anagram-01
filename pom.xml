@@ -34,7 +34,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>codekata.AnagramByWordlistLookup</mainClass>
+                            <mainClass>com.payone.codekata.AnagramByWordlistLookup</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
