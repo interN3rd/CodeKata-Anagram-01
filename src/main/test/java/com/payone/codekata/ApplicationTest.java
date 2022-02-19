@@ -1,6 +1,8 @@
 package com.payone.codekata;
 
 import org.junit.jupiter.api.*;
+
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -47,7 +49,7 @@ class ApplicationTest {
     void testMethodFindAnagrams() throws IOException {
         AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup("left");
         String userInput = anagramByWordlistLookup.getWord();
-        List<String> result = anagramByWordlistLookup.findAnagrams(userInput);
+        List<String> result = anagramByWordlistLookup.findAnagrams(userInput, new FileInputStream("D:\\Codewerkstatt\\wordlists\\english_words_alpha.txt" ) );
 
         Assertions.assertFalse( result.isEmpty() );
         Assertions.assertEquals( 2, result.size() );
@@ -61,7 +63,7 @@ class ApplicationTest {
     void testMethodFindAnagramsWithHello() throws IOException {
         AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup("hello");
         String userInput = anagramByWordlistLookup.getWord();
-        List<String> result = anagramByWordlistLookup.findAnagrams( userInput );
+        List<String> result = anagramByWordlistLookup.findAnagrams( userInput, new FileInputStream("D:\\Codewerkstatt\\wordlists\\english_words_alpha.txt" )  );
         Assertions.assertTrue( result.isEmpty() );
     }
 
@@ -70,7 +72,7 @@ class ApplicationTest {
     void testMethodFindAnagramsWithNotEvenAWord() throws IOException {
         AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup("yadayada");
         String userInput = anagramByWordlistLookup.getWord();
-        List<String> result = anagramByWordlistLookup.findAnagrams( userInput );
+        List<String> result = anagramByWordlistLookup.findAnagrams( userInput, new FileInputStream("D:\\Codewerkstatt\\wordlists\\english_words_alpha.txt" )  );
         Assertions.assertTrue( result.isEmpty() );
     }
 

@@ -102,7 +102,7 @@ public class AnagramByWordlistLookup implements AnagramFinder {
         return possibleAnagrams;
     }
 
-    public List<String> findAnagrams( final String word ) throws IOException {
+    public List<String> findAnagrams( final String word, final InputStream wordlist ) {
 
         sortOutInvalidArguments( word );
 
@@ -119,11 +119,8 @@ public class AnagramByWordlistLookup implements AnagramFinder {
         // compare every letter combination with a list of english words. If a match is found, it's an anagram
         List<String> anagrams = new ArrayList<>();
         List<String> wordList;
-        try (InputStream stream = AnagramByWordlistLookup.class.getResourceAsStream("/english_words_alpha.txt")) {
-            assert stream != null;
-            BufferedReader bufferedReader = new BufferedReader( new InputStreamReader( stream ) );
-            wordList = bufferedReader.lines().collect(Collectors.toList());
-        }
+        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader( wordlist ) );
+        wordList = bufferedReader.lines().collect( Collectors.toList() );
 
         // by definition an anagram consists of the same amount of letters like the original word
         // example: if the user types in "owl" an anagram would be "low"

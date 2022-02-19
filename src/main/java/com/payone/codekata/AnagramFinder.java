@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface AnagramFinder {
 
-    List<String> findAnagrams( final String userInput ) throws IOException;
+    List<String> findAnagrams( final String userInput, final InputStream wordlist ) throws IOException;
 }
