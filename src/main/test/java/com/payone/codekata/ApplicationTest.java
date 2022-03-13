@@ -4,17 +4,18 @@ import org.junit.jupiter.api.*;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DisplayName( "AnagramTest" )
 class ApplicationTest {
 
     @Test
-    @DisplayName( "test buildWords(): good case" )
+    @DisplayName( "test buildWords(): good case with given word 'bowl'" )
     void testMethodBuildWords() {
         List<String> result = AnagramByWordlistLookup.buildWords( "bowl" );
         Assertions.assertFalse( result.isEmpty() );
-        Assertions.assertEquals( 24, result.size() );
+        assertEquals( 24, result.size() );
         Assertions.assertTrue( result.contains( "bowl" ) );
         Assertions.assertTrue( result.contains( "bolw" ) );
         Assertions.assertTrue( result.contains( "bwol" ) );
@@ -43,14 +44,14 @@ class ApplicationTest {
     }
 
     @Test
-    @DisplayName( "test findAnagrams(): good case" )
+    @DisplayName( "test findAnagrams(): good case with given word 'left'" )
     void testMethodFindAnagrams() {
         AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( "left" );
         String userInput = anagramByWordlistLookup.getWord();
         List<String> result = anagramByWordlistLookup.findAnagrams(userInput );
 
         Assertions.assertFalse( result.isEmpty() );
-        Assertions.assertEquals( 2, result.size() );
+        assertEquals( 2, result.size() );
         Assertions.assertTrue( result.contains( "flet" ) );
         Assertions.assertTrue( result.contains( "felt" ) );
         Assertions.assertFalse( result.contains( "anythingOtherThanLeftStuff" ) );
@@ -66,7 +67,7 @@ class ApplicationTest {
     }
 
     @Test
-    @DisplayName( "test findAnagrams(): no anagram found for not existing word" )
+    @DisplayName( "test findAnagrams(): no anagram found for NOT existing word" )
     void testMethodFindAnagramsWithNotEvenAWord() {
         AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( "yadayada" );
         String userInput = anagramByWordlistLookup.getWord();
@@ -77,25 +78,30 @@ class ApplicationTest {
     @Test
     @DisplayName( "test invalid argument: null value" )
     void testSortingOutInvalidArgumentNullValue() {
-        assertThrows( IllegalArgumentException.class, ()-> AnagramByWordlistLookup.sortOutInvalidArguments(null ) );
+        Throwable exception = assertThrows( IllegalArgumentException.class, ()-> AnagramByWordlistLookup.sortOutInvalidArguments(null ) );
+        assertEquals("A value of 'null' was received.", exception.getMessage() );
     }
 
     @Test
     @DisplayName( "test invalid argument: space character meant as 'empty' input" )
     void testSortingOutInvalidArgumentSpaceChar() {
-        assertThrows( IllegalArgumentException.class, ()-> AnagramByWordlistLookup.sortOutInvalidArguments(" ") );
+        Throwable exception = assertThrows( IllegalArgumentException.class, ()-> AnagramByWordlistLookup.sortOutInvalidArguments(" ") );
+        assertEquals("A non-alphabetical character was received.", exception.getMessage() );
     }
 
     @Test
     @DisplayName( "test invalid argument: numeric character" )
     void testSortingOutInvalidArgumentNumericChar() {
-        assertThrows( IllegalArgumentException.class, ()-> AnagramByWordlistLookup.sortOutInvalidArguments("r0me") );
+        Throwable exception = assertThrows( IllegalArgumentException.class, ()-> AnagramByWordlistLookup.sortOutInvalidArguments("r0me") );
+        assertEquals("A non-alphabetical character was received.", exception.getMessage() );
     }
 
     @Test
     @DisplayName( "test invalid argument: special character" )
     void testSortingOutInvalidArgumentSpecialChar() {
-        assertThrows( IllegalArgumentException.class, ()-> AnagramByWordlistLookup.sortOutInvalidArguments("le'baguette") );
+
+        Throwable exception = assertThrows( IllegalArgumentException.class, ()-> AnagramByWordlistLookup.sortOutInvalidArguments("le'baguette") );
+        assertEquals("A non-alphabetical character was received.", exception.getMessage() );
     }
 
     @Test
