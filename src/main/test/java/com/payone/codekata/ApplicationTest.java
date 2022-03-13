@@ -2,8 +2,6 @@ package com.payone.codekata;
 
 import org.junit.jupiter.api.*;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -46,10 +44,10 @@ class ApplicationTest {
 
     @Test
     @DisplayName( "test findAnagrams(): good case" )
-    void testMethodFindAnagrams() throws IOException {
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup("left");
+    void testMethodFindAnagrams() {
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( "left" );
         String userInput = anagramByWordlistLookup.getWord();
-        List<String> result = anagramByWordlistLookup.findAnagrams(userInput, new FileInputStream("D:\\Codewerkstatt\\wordlists\\english_words_alpha.txt" ) );
+        List<String> result = anagramByWordlistLookup.findAnagrams(userInput );
 
         Assertions.assertFalse( result.isEmpty() );
         Assertions.assertEquals( 2, result.size() );
@@ -60,62 +58,20 @@ class ApplicationTest {
 
     @Test
     @DisplayName( "test findAnagrams(): no anagram found for existing word" )
-    void testMethodFindAnagramsWithHello() throws IOException {
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup("hello");
+    void testMethodFindAnagramsWithHello() {
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( "hello" );
         String userInput = anagramByWordlistLookup.getWord();
-        List<String> result = anagramByWordlistLookup.findAnagrams( userInput, new FileInputStream("D:\\Codewerkstatt\\wordlists\\english_words_alpha.txt" )  );
+        List<String> result = anagramByWordlistLookup.findAnagrams( userInput);
         Assertions.assertTrue( result.isEmpty() );
     }
 
     @Test
     @DisplayName( "test findAnagrams(): no anagram found for not existing word" )
-    void testMethodFindAnagramsWithNotEvenAWord() throws IOException {
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup("yadayada");
+    void testMethodFindAnagramsWithNotEvenAWord() {
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( "yadayada" );
         String userInput = anagramByWordlistLookup.getWord();
-        List<String> result = anagramByWordlistLookup.findAnagrams( userInput, new FileInputStream("D:\\Codewerkstatt\\wordlists\\english_words_alpha.txt" )  );
+        List<String> result = anagramByWordlistLookup.findAnagrams( userInput );
         Assertions.assertTrue( result.isEmpty() );
-    }
-
-    @Test
-    @DisplayName( "test invalid anagram candidate: null value" )
-    void testSortingOutInvalidAnagramCandidateNullValue() {
-        assertThrows( IllegalArgumentException.class, ()-> AnagramByWordlistLookup.sortOutInvalidAnagramCandidate(null ) );
-    }
-
-    @Test
-    @DisplayName( "test invalid anagram candidate: space character meant as 'empty' input" )
-    void testSortingOutInvalidAnagramCandidateSpaceChar() {
-        assertThrows( IllegalArgumentException.class, ()-> AnagramByWordlistLookup.sortOutInvalidAnagramCandidate(" ") );
-    }
-
-    @Test
-    @DisplayName( "test invalid anagram candidate: single character" )
-    void testSortingOutInvalidAnagramCandidateSingleChar() {
-        assertThrows( IllegalArgumentException.class, ()-> AnagramByWordlistLookup.sortOutInvalidAnagramCandidate("a") );
-    }
-
-    @Test
-    @DisplayName( "test invalid anagram candidate: numeric character" )
-    void testSortingOutInvalidAnagramCandidateNumericChar() {
-        assertThrows( IllegalArgumentException.class, ()-> AnagramByWordlistLookup.sortOutInvalidAnagramCandidate("r0me") );
-    }
-
-    @Test
-    @DisplayName( "test invalid anagram candidate: special character" )
-    void testSortingOutInvalidAnagramCandidateSpecialChar() {
-        assertThrows( IllegalArgumentException.class, ()-> AnagramByWordlistLookup.sortOutInvalidAnagramCandidate("le'baguette") );
-    }
-
-    @Test
-    @DisplayName( "test invalid anagram candidate: empty spaces before word" )
-    void testSortingOutInvalidAnagramCandidateEmptySpaceBeforeWord() {
-        assertThrows( IllegalArgumentException.class, ()-> AnagramByWordlistLookup.sortOutInvalidAnagramCandidate("  rome") );
-    }
-
-    @Test
-    @DisplayName( "test invalid anagram candidate: empty spaces after word" )
-    void testSortingOutInvalidAnagramCandidateEmptySpaceAfterWord() {
-        assertThrows( IllegalArgumentException.class, ()-> AnagramByWordlistLookup.sortOutInvalidAnagramCandidate("rome  ") );
     }
 
     @Test
