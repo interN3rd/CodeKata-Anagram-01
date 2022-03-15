@@ -71,6 +71,7 @@ public class AnagramByWordlistLookup implements AnagramFinder {
         // anagrams are found by looking up entries of a wordlist. There has to be a wordlist accessible then
         List<String> wordList = getWordlistContent("src/main/test/resources/english_words_alpha.txt");
         // or something like: askForWordlistFile()?
+        validateWordlistContent( wordList );
 
         // create every possible letter combination of the word that the user typed in
         List<String> possibleAnagrams = buildWords( word );
@@ -107,7 +108,7 @@ public class AnagramByWordlistLookup implements AnagramFinder {
         return anagrams.subList(1, anagrams.size());
     }
 
-    public static List<String> buildWords( final String word ) {
+    List<String> buildWords(final String word) {
 
         List<String> possibleAnagrams = new ArrayList<>();
         
@@ -134,12 +135,12 @@ public class AnagramByWordlistLookup implements AnagramFinder {
 
         if( textfile.exists() && !textfile.isDirectory() ) {
 
+            if( textfile.length() == 0 ) {
+
+                throw new IllegalArgumentException( "The file received is empty." );
+            }
+
             try ( BufferedReader bufferedReader = new BufferedReader( new InputStreamReader( new FileInputStream( pathToWordlist ) ) ) ) {
-
-                if( bufferedReader.readLine() == null ) {
-
-                    throw new IllegalArgumentException( "The file received is empty." );
-                }
 
                 wordList = bufferedReader.lines().collect( Collectors.toList() );
 
@@ -156,5 +157,16 @@ public class AnagramByWordlistLookup implements AnagramFinder {
         }
 
         return new ArrayList<>();
+    }
+
+    static void validateWordlistContent( final List<String> list ) {
+
+        for (String singleListEntry : list) {
+
+            if (!Pattern.compile("^[A-Za-z ]+$").matcher(singleListEntry).find()) {
+
+                throw new IllegalArgumentException("A non-alphabetical character was found in this file.");
+            }
+        }
     }
 }

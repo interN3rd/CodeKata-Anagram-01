@@ -3,7 +3,7 @@ package com.payone.codekata;
 import org.junit.jupiter.api.*;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -176,7 +176,11 @@ class ApplicationTest {
     @DisplayName( "test getWordlistContent(): wordlist with special characters")
     void testGetWordlistContentWithSpecialCharacters() {
 
-        Throwable exception = assertThrows( IllegalArgumentException.class, ()-> AnagramByWordlistLookup.getWordlistContent("src/main/test/resources/special_chars.txt") );
+        List<String> specialChars = new ArrayList<>();
+        specialChars.add( "test" );
+        specialChars.add( "t3st" );
+
+        Throwable exception = assertThrows( IllegalArgumentException.class, ()-> AnagramByWordlistLookup.validateWordlistContent( specialChars ) );
         assertEquals("A non-alphabetical character was found in this file.", exception.getMessage() );
     }
 }
