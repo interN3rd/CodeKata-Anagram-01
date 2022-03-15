@@ -60,7 +60,7 @@ public class AnagramByWordlistLookup implements AnagramFinder {
      *     could not have: single characters, fantasy words or random input like apoigfnwui
      *     does not have: existing words like 'hello' or 'extinguisher'
      */
-    public List<String> findAnagrams( final String word ) {
+    public List<String> findAnagrams( final String word ) throws FileNotFoundException {
 
         // there are no anagrams for a single character
         // in that case a new empty list is return as it is not a critical error
@@ -127,24 +127,32 @@ public class AnagramByWordlistLookup implements AnagramFinder {
         return possibleAnagrams;
     }
 
-    static List<String> getWordlistContent( final String pathToWordlist ) {
+    static List<String> getWordlistContent( final String pathToWordlist ) throws FileNotFoundException {
 
         List<String> wordList;
+        final File textfile = new File( pathToWordlist );
 
-        try ( BufferedReader bufferedReader = new BufferedReader( new InputStreamReader( new FileInputStream( pathToWordlist ) ) ) ) {
+        if( textfile.exists() && !textfile.isDirectory() ) {
 
-            if( bufferedReader.readLine() == null ) {
+            try ( BufferedReader bufferedReader = new BufferedReader( new InputStreamReader( new FileInputStream( pathToWordlist ) ) ) ) {
 
-                throw new IllegalArgumentException( "The file received is empty." );
+                if( bufferedReader.readLine() == null ) {
+
+                    throw new IllegalArgumentException( "The file received is empty." );
+                }
+
+                wordList = bufferedReader.lines().collect( Collectors.toList() );
+
+                return wordList;
+
+            } catch( IOException exception ) {
+
+                logger.severe( "File could not be read." );
             }
 
-            wordList = bufferedReader.lines().collect( Collectors.toList() );
+        } else {
 
-            return wordList;
-
-        } catch( IOException exception ) {
-
-            logger.severe( "File could not be found." );
+            throw new FileNotFoundException( "File could not be found." );
         }
 
         return new ArrayList<>();

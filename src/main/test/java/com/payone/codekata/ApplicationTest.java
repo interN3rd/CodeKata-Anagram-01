@@ -2,6 +2,7 @@ package com.payone.codekata;
 
 import org.junit.jupiter.api.*;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -42,7 +43,7 @@ class ApplicationTest {
 
     @Test
     @DisplayName( "test findAnagrams(): good case with given word 'left'" )
-    void testMethodFindAnagramsOfLeft() {
+    void testMethodFindAnagramsOfLeft() throws FileNotFoundException {
         AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( "left" );
         String userInput = anagramByWordlistLookup.getWord();
         List<String> result = anagramByWordlistLookup.findAnagrams( userInput );
@@ -56,7 +57,7 @@ class ApplicationTest {
 
     @Test
     @DisplayName( "test findAnagrams(): good case with a single character" )
-    void testMethodFindAnagramsOfSingleCharacter() {
+    void testMethodFindAnagramsOfSingleCharacter() throws FileNotFoundException {
         AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( "a" );
         String userInput = anagramByWordlistLookup.getWord();
         List<String> result = anagramByWordlistLookup.findAnagrams( userInput );
@@ -66,7 +67,7 @@ class ApplicationTest {
 
     @Test
     @DisplayName( "test findAnagrams(): good case with given word 'rome' and leading empty spaces" )
-    void testMethodFindAnagramsOfRomeWithLeadingSpaces() {
+    void testMethodFindAnagramsOfRomeWithLeadingSpaces() throws FileNotFoundException {
         AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( "   rome" );
         String userInput = anagramByWordlistLookup.getWord();
         List<String> result = anagramByWordlistLookup.findAnagrams( userInput );
@@ -81,7 +82,7 @@ class ApplicationTest {
 
     @Test
     @DisplayName( "test findAnagrams(): good case with given word 'rome' and leading empty spaces" )
-    void testMethodFindAnagramsOfRomeWithTrailingSpaces() {
+    void testMethodFindAnagramsOfRomeWithTrailingSpaces() throws FileNotFoundException {
         AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( "rome  " );
         String userInput = anagramByWordlistLookup.getWord();
         List<String> result = anagramByWordlistLookup.findAnagrams(userInput );
@@ -96,7 +97,7 @@ class ApplicationTest {
 
     @Test
     @DisplayName( "test findAnagrams(): no anagram found for existing word" )
-    void testMethodFindAnagramsWithHello() {
+    void testMethodFindAnagramsWithHello() throws FileNotFoundException {
         AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( "hello" );
         String userInput = anagramByWordlistLookup.getWord();
         List<String> result = anagramByWordlistLookup.findAnagrams( userInput);
@@ -105,7 +106,7 @@ class ApplicationTest {
 
     @Test
     @DisplayName( "test findAnagrams(): no anagram found for NOT existing word" )
-    void testMethodFindAnagramsWithNotEvenAWord() {
+    void testMethodFindAnagramsWithNotEvenAWord() throws FileNotFoundException {
         AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( "yadayada" );
         String userInput = anagramByWordlistLookup.getWord();
         List<String> result = anagramByWordlistLookup.findAnagrams( userInput );
@@ -151,7 +152,7 @@ class ApplicationTest {
     @DisplayName( "test getWordlistContent(): invalid file path")
     void testGetWordlistContentWithInvalidPath() {
 
-        Throwable exception = assertThrows( IOException.class, ()-> AnagramByWordlistLookup.getWordlistContent("a/b/c/d") );
+        Throwable exception = assertThrows( FileNotFoundException.class, ()-> AnagramByWordlistLookup.getWordlistContent("a/b/c/d") );
         assertEquals("File could not be found.", exception.getMessage() );
     }
 
