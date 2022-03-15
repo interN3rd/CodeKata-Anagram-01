@@ -157,6 +157,14 @@ class ApplicationTest {
     }
 
     @Test
+    @DisplayName( "test getWordlistContent(): invalid file path")
+    void testGetWordlistContentWithPathToDirectory() {
+
+        Throwable exception = assertThrows( FileNotFoundException.class, ()-> AnagramByWordlistLookup.getWordlistContent("src/main/test/resources/") );
+        assertEquals("File could not be found.", exception.getMessage() );
+    }
+
+    @Test
     @DisplayName( "test getWordlistContent(): empty file")
     void testGetWordlistContentWithEmptyFile() {
 
