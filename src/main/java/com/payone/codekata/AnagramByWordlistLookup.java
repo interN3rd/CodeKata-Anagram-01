@@ -20,27 +20,7 @@ public class AnagramByWordlistLookup implements AnagramFinder {
      */
     public List<String> findAnagrams( final String word ) throws FileNotFoundException {
 
-        if( word == null ) {
-
-            throw new IllegalArgumentException( "A value of 'null' was received." );
-        }
-
-        String anagramCandidate = word.trim();
-
-        if( anagramCandidate.isEmpty() ) {
-
-            throw new IllegalArgumentException( "No character was received." );
-        }
-
-        if( anagramCandidate.length() > 27 ) {
-
-            throw new IllegalArgumentException( "Received an unexpected value. The longest known word to have anagrams consists of 27 characters." );
-        }
-
-        if( !Pattern.compile( "^[A-Za-z ]+$" ).matcher( anagramCandidate ).find() ) {
-
-            throw new IllegalArgumentException( "A non-alphabetical character was received." );
-        }
+        String anagramCandidate = validateAnagramCandidate( word );
 
         // there are no anagrams for a single character
         // in that case a new empty list is return as it is not a critical error
@@ -149,5 +129,31 @@ public class AnagramByWordlistLookup implements AnagramFinder {
                 throw new IllegalArgumentException("A non-alphabetical character was found in this file.");
             }
         }
+    }
+
+    private String validateAnagramCandidate( final String word ) {
+
+        if( word == null ) {
+
+            throw new IllegalArgumentException( "A value of 'null' was received." );
+        }
+
+        if( word.trim().isEmpty() ) {
+
+            throw new IllegalArgumentException( "No character was received." );
+        }
+
+        if( word.length() > 27 ) {
+
+            throw new IllegalArgumentException( "Received an unexpected value. The longest known word to have anagrams consists of 27 characters." );
+        }
+
+        if( !Pattern.compile( "^[A-Za-z ]+$" ).matcher( word ).find() ) {
+
+            throw new IllegalArgumentException( "A non-alphabetical character was received." );
+        }
+
+        return word.trim();
+
     }
 }

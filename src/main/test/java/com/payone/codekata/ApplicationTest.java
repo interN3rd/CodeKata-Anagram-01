@@ -2,9 +2,7 @@ package com.payone.codekata;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
-import org.junit.jupiter.params.provider.NullSource;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -17,43 +15,26 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class ApplicationTest {
 
     @ParameterizedTest
-    @ValueSource( strings = { " ", "r0me", "le'baguette" } )
-    @NullAndEmptySource
+    @CsvSource(value = {
+            ",A value of 'null' was received.", // null
+            "'',No character was received.", // empty
+            "' ',No character was received.", // blank
+            "r0me,A non-alphabetical character was received.",
+            "le'baguette,A non-alphabetical character was received."
+    })
     @DisplayName( "test method findAnagrams() with invalid anagram candidates" )
-    void testValidationOfInvalidAnagramCandidates( String invalidAnagramCandidate ) {
+    void testValidationOfInvalidAnagramCandidates( String invalidAnagramCandidate, final String expectedErrorMsg) {
 
         AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
-        assertThrows( IllegalArgumentException.class, ()-> anagramByWordlistLookup.findAnagrams( invalidAnagramCandidate ) );
-        //assertEquals("A value of 'null' was received.", exception.getMessage() );
+
+        Throwable exception = assertThrows( IllegalArgumentException.class, ()-> {
+
+            anagramByWordlistLookup.findAnagrams( invalidAnagramCandidate );
+        });
+
+        assertEquals( expectedErrorMsg, exception.getMessage() );
     }
-
-    @Test
-    @DisplayName( "test invalid argument: space character meant as 'empty' input" )
-    void testSortingOutIllegalArgumentSpaceChar() {
-
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
-        Throwable exception = assertThrows( IllegalArgumentException.class, ()-> anagramByWordlistLookup.findAnagrams( " " ) );
-        assertEquals("No character was received.", exception.getMessage() );
-    }
-
-    @Test
-    @DisplayName( "test invalid argument: numeric character" )
-    void testSortingOutIllegalArgumentNumericChar() {
-
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
-        Throwable exception = assertThrows( IllegalArgumentException.class, ()-> anagramByWordlistLookup.findAnagrams( "r0me" ) );
-        assertEquals("A non-alphabetical character was received.", exception.getMessage() );
-    }
-
-    @Test
-    @DisplayName( "test invalid argument: special character" )
-    void testSortingOutIllegalArgumentSpecialChar() {
-
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
-        Throwable exception = assertThrows( IllegalArgumentException.class, ()-> anagramByWordlistLookup.findAnagrams( "le'baguette" ) );
-        assertEquals("A non-alphabetical character was received.", exception.getMessage() );
-    }
-
+    
     @Test
     @DisplayName( "test findAnagrams(): good case with given word 'left'" )
     void testMethodFindAnagramsOfLeft() throws FileNotFoundException {
