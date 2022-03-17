@@ -15,21 +15,27 @@ class ApplicationTest {
     @Test
     @DisplayName( "test invalid argument: null value" )
     void testSortingOutIllegalArgumentNullValue() {
-        Throwable exception = assertThrows( IllegalArgumentException.class, ()-> new AnagramByWordlistLookup( null ) );
+
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
+        Throwable exception = assertThrows( IllegalArgumentException.class, ()-> anagramByWordlistLookup.findAnagrams( null ) );
         assertEquals("A value of 'null' was received.", exception.getMessage() );
     }
 
     @Test
     @DisplayName( "test invalid argument: space character meant as 'empty' input" )
     void testSortingOutIllegalArgumentSpaceChar() {
-        Throwable exception = assertThrows( IllegalArgumentException.class, ()-> new AnagramByWordlistLookup( " " ) );
+
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
+        Throwable exception = assertThrows( IllegalArgumentException.class, ()-> anagramByWordlistLookup.findAnagrams( " " ) );
         assertEquals("No character was received.", exception.getMessage() );
     }
 
     @Test
     @DisplayName( "test invalid argument: numeric character" )
     void testSortingOutIllegalArgumentNumericChar() {
-        Throwable exception = assertThrows( IllegalArgumentException.class, ()-> new AnagramByWordlistLookup( "r0me" ) );
+
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
+        Throwable exception = assertThrows( IllegalArgumentException.class, ()-> anagramByWordlistLookup.findAnagrams( "r0me" ) );
         assertEquals("A non-alphabetical character was received.", exception.getMessage() );
     }
 
@@ -37,16 +43,17 @@ class ApplicationTest {
     @DisplayName( "test invalid argument: special character" )
     void testSortingOutIllegalArgumentSpecialChar() {
 
-        Throwable exception = assertThrows( IllegalArgumentException.class, ()-> new AnagramByWordlistLookup( "le'baguette" ) );
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
+        Throwable exception = assertThrows( IllegalArgumentException.class, ()-> anagramByWordlistLookup.findAnagrams( "le'baguette" ) );
         assertEquals("A non-alphabetical character was received.", exception.getMessage() );
     }
 
     @Test
     @DisplayName( "test findAnagrams(): good case with given word 'left'" )
     void testMethodFindAnagramsOfLeft() throws FileNotFoundException {
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( "left" );
-        String userInput = anagramByWordlistLookup.getWord();
-        List<String> result = anagramByWordlistLookup.findAnagrams( userInput );
+
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
+        List<String> result = anagramByWordlistLookup.findAnagrams( "left" );
 
         Assertions.assertFalse( result.isEmpty() );
         assertEquals( 2, result.size() );
@@ -58,19 +65,18 @@ class ApplicationTest {
     @Test
     @DisplayName( "test findAnagrams(): good case with a single character" )
     void testMethodFindAnagramsOfSingleCharacter() throws FileNotFoundException {
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( "a" );
-        String userInput = anagramByWordlistLookup.getWord();
-        List<String> result = anagramByWordlistLookup.findAnagrams( userInput );
 
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
+        List<String> result = anagramByWordlistLookup.findAnagrams( "a" );
         Assertions.assertTrue( result.isEmpty() );
     }
 
     @Test
     @DisplayName( "test findAnagrams(): good case with given word 'rome' and leading empty spaces" )
     void testMethodFindAnagramsOfRomeWithLeadingSpaces() throws FileNotFoundException {
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( "   rome" );
-        String userInput = anagramByWordlistLookup.getWord();
-        List<String> result = anagramByWordlistLookup.findAnagrams( userInput );
+
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
+        List<String> result = anagramByWordlistLookup.findAnagrams( "   rome" );
 
         Assertions.assertFalse( result.isEmpty() );
         assertEquals( 3, result.size() );
@@ -83,9 +89,9 @@ class ApplicationTest {
     @Test
     @DisplayName( "test findAnagrams(): good case with given word 'rome' and leading empty spaces" )
     void testMethodFindAnagramsOfRomeWithTrailingSpaces() throws FileNotFoundException {
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( "rome  " );
-        String userInput = anagramByWordlistLookup.getWord();
-        List<String> result = anagramByWordlistLookup.findAnagrams(userInput );
+
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
+        List<String> result = anagramByWordlistLookup.findAnagrams( "rome  " );
 
         Assertions.assertFalse( result.isEmpty() );
         assertEquals( 3, result.size() );
@@ -98,18 +104,18 @@ class ApplicationTest {
     @Test
     @DisplayName( "test findAnagrams(): no anagram found for existing word" )
     void testMethodFindAnagramsWithHello() throws FileNotFoundException {
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( "hello" );
-        String userInput = anagramByWordlistLookup.getWord();
-        List<String> result = anagramByWordlistLookup.findAnagrams( userInput);
+
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
+        List<String> result = anagramByWordlistLookup.findAnagrams( "hello" );
         Assertions.assertTrue( result.isEmpty() );
     }
 
     @Test
     @DisplayName( "test findAnagrams(): no anagram found for NOT existing word" )
     void testMethodFindAnagramsWithNotEvenAWord() throws FileNotFoundException {
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( "yadayada" );
-        String userInput = anagramByWordlistLookup.getWord();
-        List<String> result = anagramByWordlistLookup.findAnagrams( userInput );
+
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
+        List<String> result = anagramByWordlistLookup.findAnagrams( "yadayada" );
         Assertions.assertTrue( result.isEmpty() );
     }
 
@@ -117,8 +123,8 @@ class ApplicationTest {
     @DisplayName( "test buildWords(): good case with given word 'bowl'" )
     void testMethodBuildWords() {
 
-        AnagramByWordlistLookup anagramByWordListLookup = new AnagramByWordlistLookup( "bowl" );
-        List<String> result = anagramByWordListLookup.buildWords( anagramByWordListLookup.getWord() );
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
+        List<String> result = anagramByWordlistLookup.buildWords( "bowl" );
         Assertions.assertFalse( result.isEmpty() );
         assertEquals( 24, result.size() );
         Assertions.assertTrue( result.contains( "bowl" ) );

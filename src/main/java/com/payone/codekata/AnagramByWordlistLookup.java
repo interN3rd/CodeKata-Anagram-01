@@ -9,50 +9,7 @@ import java.util.stream.Collectors;
 
 public class AnagramByWordlistLookup implements AnagramFinder {
 
-    // TO DO: remove member variable
-    private String word;
-
     static Logger logger;
-
-    /**
-     *
-     * @param word should only consist of character signs that are compliant to the ASCII table for now
-     *             at the end, the string method 'trim()' is called to make up for potential copy & paste mistakes by the user
-     */
-    public AnagramByWordlistLookup( final String word ) {
-
-        if( word == null ) {
-
-            throw new IllegalArgumentException( "A value of 'null' was received." );
-        }
-
-        if( word.trim().isEmpty() ) {
-
-            throw new IllegalArgumentException( "No character was received." );
-        }
-
-        if( word.length() > 27 ) {
-
-            throw new IllegalArgumentException( "Received an unexpected value. The longest known word to have anagrams consists of 27 characters." );
-        }
-
-        if( !Pattern.compile( "^[A-Za-z ]+$" ).matcher( word ).find() ) {
-
-            throw new IllegalArgumentException( "A non-alphabetical character was received." );
-        }
-
-        this.setWord( word.trim() );
-    }
-
-    public String getWord() {
-
-        return word;
-    }
-
-    public void setWord( final String word ) {
-
-        this.word = word;
-    }
 
     /**
      *
@@ -63,9 +20,32 @@ public class AnagramByWordlistLookup implements AnagramFinder {
      */
     public List<String> findAnagrams( final String word ) throws FileNotFoundException {
 
+        if( word == null ) {
+
+            throw new IllegalArgumentException( "A value of 'null' was received." );
+        }
+
+        String anagramCandidate = word.trim();
+
+        if( anagramCandidate.isEmpty() ) {
+
+            throw new IllegalArgumentException( "No character was received." );
+        }
+
+        if( anagramCandidate.length() > 27 ) {
+
+            throw new IllegalArgumentException( "Received an unexpected value. The longest known word to have anagrams consists of 27 characters." );
+        }
+
+        if( !Pattern.compile( "^[A-Za-z ]+$" ).matcher( anagramCandidate ).find() ) {
+
+            throw new IllegalArgumentException( "A non-alphabetical character was received." );
+        }
+
         // there are no anagrams for a single character
         // in that case a new empty list is return as it is not a critical error
-        if( word.length() == 1 ) {
+        if( anagramCandidate.length() == 1 ) {
+
             return new ArrayList<>();
         }
 
@@ -75,7 +55,7 @@ public class AnagramByWordlistLookup implements AnagramFinder {
         validateWordlistContent( wordList );
 
         // create every possible letter combination of the word that the user typed in
-        List<String> possibleAnagrams = buildWords( word );
+        List<String> possibleAnagrams = buildWords( anagramCandidate );
         if( possibleAnagrams.isEmpty() || possibleAnagrams.size() == 1 ) {
             return possibleAnagrams;
         }
@@ -87,7 +67,7 @@ public class AnagramByWordlistLookup implements AnagramFinder {
         // example: if the user types in "owl" an anagram would be "low"
         // both words should be in the wordlist
         // therefore: if the word doesn't even come up in the wordlist, there will be no anagram
-        if( wordList.contains( word) ) {
+        if( wordList.contains( anagramCandidate ) ) {
             for ( String anagram : possibleAnagrams ) {
                 if ( wordList.contains( anagram ) ) {
                     anagrams.add( anagram );
