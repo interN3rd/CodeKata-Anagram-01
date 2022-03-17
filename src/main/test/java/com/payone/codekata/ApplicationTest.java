@@ -3,6 +3,7 @@ package com.payone.codekata;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -27,14 +28,11 @@ class ApplicationTest {
 
         AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
 
-        Throwable exception = assertThrows( IllegalArgumentException.class, ()-> {
-
-            anagramByWordlistLookup.findAnagrams( invalidAnagramCandidate );
-        });
+        Throwable exception = assertThrows( IllegalArgumentException.class, ()-> anagramByWordlistLookup.findAnagrams( invalidAnagramCandidate ) );
 
         assertEquals( expectedErrorMsg, exception.getMessage() );
     }
-    
+
     @Test
     @DisplayName( "test findAnagrams(): good case with given word 'left'" )
     void testMethodFindAnagramsOfLeft() throws FileNotFoundException {
@@ -49,12 +47,12 @@ class ApplicationTest {
         Assertions.assertFalse( result.contains( "anythingOtherThanLeftStuff" ) );
     }
 
-    @Test
-    @DisplayName( "test findAnagrams(): good case with a single character" )
-    void testMethodFindAnagramsOfSingleCharacter() throws FileNotFoundException {
+    @ParameterizedTest
+    @ValueSource( strings = { "a", "hello", "yadayada" } )
+    void testMethodFindAnagramsShouldReturnEmptyResult( final String anagramCandidate ) throws FileNotFoundException {
 
         AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
-        List<String> result = anagramByWordlistLookup.findAnagrams( "a" );
+        List<String> result = anagramByWordlistLookup.findAnagrams( anagramCandidate );
         Assertions.assertTrue( result.isEmpty() );
     }
 
@@ -87,25 +85,7 @@ class ApplicationTest {
         Assertions.assertTrue( result.contains( "mero" ) );
         Assertions.assertFalse( result.contains( "anythingOtherThanRomeStuff" ) );
     }
-
-    @Test
-    @DisplayName( "test findAnagrams(): no anagram found for existing word" )
-    void testMethodFindAnagramsWithHello() throws FileNotFoundException {
-
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
-        List<String> result = anagramByWordlistLookup.findAnagrams( "hello" );
-        Assertions.assertTrue( result.isEmpty() );
-    }
-
-    @Test
-    @DisplayName( "test findAnagrams(): no anagram found for NOT existing word" )
-    void testMethodFindAnagramsWithNotEvenAWord() throws FileNotFoundException {
-
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
-        List<String> result = anagramByWordlistLookup.findAnagrams( "yadayada" );
-        Assertions.assertTrue( result.isEmpty() );
-    }
-
+    
     @Test
     @DisplayName( "test buildWords(): good case with given word 'bowl'" )
     void testMethodBuildWords() {
