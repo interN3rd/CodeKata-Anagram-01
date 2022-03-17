@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 public class AnagramByWordlistLookup implements AnagramFinder {
 
+    // TO DO: remove member variable
     private String word;
 
     static Logger logger;
