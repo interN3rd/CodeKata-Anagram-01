@@ -85,7 +85,7 @@ class ApplicationTest {
         Assertions.assertTrue( result.contains( "mero" ) );
         Assertions.assertFalse( result.contains( "anythingOtherThanRomeStuff" ) );
     }
-    
+
     @Test
     @DisplayName( "test buildWords(): good case with given word 'bowl'" )
     void testMethodBuildWords() {

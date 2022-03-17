@@ -69,24 +69,51 @@ public class AnagramByWordlistLookup implements AnagramFinder {
         return anagrams.subList(1, anagrams.size());
     }
 
-    List<String> buildWords(final String word) {
+    List<String> buildWords( final String word ) {
+
+        String anagramCandidate = validateAnagramCandidate( word );
 
         List<String> possibleAnagrams = new ArrayList<>();
         
-        if( word.length() == 1 ) {
-            possibleAnagrams.add( word );
+        if( anagramCandidate.length() == 1 ) {
+            possibleAnagrams.add( anagramCandidate );
             return possibleAnagrams;
         }
-        for ( int i = 0; i < word.length(); i++ ) {
-            String pre = word.substring(0, i );
-            String post = word.substring( i + 1 );
+        for ( int i = 0; i < anagramCandidate.length(); i++ ) {
+            String pre = anagramCandidate.substring(0, i );
+            String post = anagramCandidate.substring( i + 1 );
             String remaining = pre + post;
             for ( String permutation : buildWords( remaining ) ) {
-                possibleAnagrams.add( word.charAt( i ) + permutation );
+                possibleAnagrams.add( anagramCandidate.charAt( i ) + permutation );
                 }
             }
 
         return possibleAnagrams;
+    }
+
+    private String validateAnagramCandidate( final String word ) {
+
+        if( word == null ) {
+
+            throw new IllegalArgumentException( "A value of 'null' was received." );
+        }
+
+        if( word.trim().isEmpty() ) {
+
+            throw new IllegalArgumentException( "No character was received." );
+        }
+
+        if( word.length() > 27 ) {
+
+            throw new IllegalArgumentException( "Received an unexpected value. The longest known word to have anagrams consists of 27 characters." );
+        }
+
+        if( !Pattern.compile( "^[A-Za-z ]+$" ).matcher( word ).find() ) {
+
+            throw new IllegalArgumentException( "A non-alphabetical character was received." );
+        }
+
+        return word.trim();
     }
 
     static List<String> getWordlistContent( final String pathToWordlist ) throws FileNotFoundException {
@@ -129,31 +156,5 @@ public class AnagramByWordlistLookup implements AnagramFinder {
                 throw new IllegalArgumentException("A non-alphabetical character was found in this file.");
             }
         }
-    }
-
-    private String validateAnagramCandidate( final String word ) {
-
-        if( word == null ) {
-
-            throw new IllegalArgumentException( "A value of 'null' was received." );
-        }
-
-        if( word.trim().isEmpty() ) {
-
-            throw new IllegalArgumentException( "No character was received." );
-        }
-
-        if( word.length() > 27 ) {
-
-            throw new IllegalArgumentException( "Received an unexpected value. The longest known word to have anagrams consists of 27 characters." );
-        }
-
-        if( !Pattern.compile( "^[A-Za-z ]+$" ).matcher( word ).find() ) {
-
-            throw new IllegalArgumentException( "A non-alphabetical character was received." );
-        }
-
-        return word.trim();
-
     }
 }
