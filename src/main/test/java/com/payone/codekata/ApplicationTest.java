@@ -1,6 +1,10 @@
 package com.payone.codekata;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -12,13 +16,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @DisplayName( "AnagramTest" )
 class ApplicationTest {
 
-    @Test
-    @DisplayName( "test invalid argument: null value" )
-    void testSortingOutIllegalArgumentNullValue() {
+    @ParameterizedTest
+    @ValueSource( strings = { " ", "r0me", "le'baguette" } )
+    @NullAndEmptySource
+    @DisplayName( "test method findAnagrams() with invalid anagram candidates" )
+    void testValidationOfInvalidAnagramCandidates( String invalidAnagramCandidate ) {
 
         AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
-        Throwable exception = assertThrows( IllegalArgumentException.class, ()-> anagramByWordlistLookup.findAnagrams( null ) );
-        assertEquals("A value of 'null' was received.", exception.getMessage() );
+        assertThrows( IllegalArgumentException.class, ()-> anagramByWordlistLookup.findAnagrams( invalidAnagramCandidate ) );
+        //assertEquals("A value of 'null' was received.", exception.getMessage() );
     }
 
     @Test

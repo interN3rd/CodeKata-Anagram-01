@@ -27,6 +27,8 @@
             <version>5.8.2</version>
             <scope>test</scope>
         </dependency>
+        <!-- https://search.maven.org/artifact/org.junit.jupiter/junit-jupiter-params -->
+        <!-- to allow @ParameterizedTest -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
