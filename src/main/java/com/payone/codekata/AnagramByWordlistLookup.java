@@ -9,6 +9,13 @@ import java.util.stream.Collectors;
 
 public class AnagramByWordlistLookup implements AnagramFinder {
 
+    private final File textFile;
+
+    public AnagramByWordlistLookup( File textFile ) {
+
+        this.textFile = textFile;
+    }
+
     static Logger logger;
 
     /**
@@ -30,7 +37,7 @@ public class AnagramByWordlistLookup implements AnagramFinder {
         }
 
         // anagrams are found by looking up entries of a wordlist. There has to be a wordlist accessible then
-        List<String> wordList = getWordlistContent("src/main/test/resources/english_words_alpha.txt");
+        List<String> wordList = getWordlistContent();
         // or something like: askForWordlistFile()?
         validateWordlistContent( wordList );
 
@@ -79,6 +86,7 @@ public class AnagramByWordlistLookup implements AnagramFinder {
             possibleAnagrams.add( anagramCandidate );
             return possibleAnagrams;
         }
+
         for ( int i = 0; i < anagramCandidate.length(); i++ ) {
             String pre = anagramCandidate.substring(0, i );
             String post = anagramCandidate.substring( i + 1 );
@@ -116,19 +124,18 @@ public class AnagramByWordlistLookup implements AnagramFinder {
         return word.trim();
     }
 
-    static List<String> getWordlistContent( final String pathToWordlist ) throws FileNotFoundException {
+    List<String> getWordlistContent() throws FileNotFoundException {
 
         List<String> wordList;
-        final File textfile = new File( pathToWordlist );
 
-        if( textfile.exists() && !textfile.isDirectory() ) {
+        if( this.textFile.exists() && !this.textFile.isDirectory() ) {
 
-            if( textfile.length() == 0 ) {
+            if( this.textFile.length() == 0 ) {
 
                 throw new IllegalArgumentException( "The file received is empty." );
             }
 
-            try ( BufferedReader bufferedReader = new BufferedReader( new InputStreamReader( new FileInputStream( pathToWordlist ) ) ) ) {
+            try ( BufferedReader bufferedReader = new BufferedReader( new InputStreamReader( new FileInputStream( this.textFile.getPath() ) ) ) ) {
 
                 wordList = bufferedReader.lines().collect( Collectors.toList() );
 

@@ -5,6 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +25,9 @@ class ApplicationTest {
             "le'baguette,A non-alphabetical character was received."
     })
     @DisplayName( "test method findAnagrams() with invalid anagram candidates" )
-    void testValidationOfInvalidAnagramCandidates( String invalidAnagramCandidate, final String expectedErrorMsg) {
+    void testValidationOfInvalidAnagramCandidates( String invalidAnagramCandidate, final String expectedErrorMsg ) {
 
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( new File( "src/main/test/resources/english_words_alpha.txt" ) );
 
         Throwable exception = assertThrows( IllegalArgumentException.class, ()-> anagramByWordlistLookup.findAnagrams( invalidAnagramCandidate ) );
 
@@ -37,7 +38,7 @@ class ApplicationTest {
     @DisplayName( "test findAnagrams(): good case with given word 'left'" )
     void testMethodFindAnagramsOfLeft() throws FileNotFoundException {
 
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( new File( "src/main/test/resources/english_words_alpha.txt" ) );
         List<String> result = anagramByWordlistLookup.findAnagrams( "left" );
 
         Assertions.assertFalse( result.isEmpty() );
@@ -51,7 +52,7 @@ class ApplicationTest {
     @ValueSource( strings = { "a", "hello", "yadayada" } )
     void testMethodFindAnagramsShouldReturnEmptyResult( final String anagramCandidate ) throws FileNotFoundException {
 
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( new File( "src/main/test/resources/english_words_alpha.txt" ) );
         List<String> result = anagramByWordlistLookup.findAnagrams( anagramCandidate );
         Assertions.assertTrue( result.isEmpty() );
     }
@@ -60,7 +61,7 @@ class ApplicationTest {
     @DisplayName( "test findAnagrams(): good case with given word 'rome' and leading empty spaces" )
     void testMethodFindAnagramsOfRomeWithLeadingSpaces() throws FileNotFoundException {
 
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( new File( "src/main/test/resources/english_words_alpha.txt" ) );
         List<String> result = anagramByWordlistLookup.findAnagrams( "   rome" );
 
         Assertions.assertFalse( result.isEmpty() );
@@ -75,7 +76,7 @@ class ApplicationTest {
     @DisplayName( "test findAnagrams(): good case with given word 'rome' and leading empty spaces" )
     void testMethodFindAnagramsOfRomeWithTrailingSpaces() throws FileNotFoundException {
 
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( new File( "src/main/test/resources/english_words_alpha.txt" ) );
         List<String> result = anagramByWordlistLookup.findAnagrams( "rome  " );
 
         Assertions.assertFalse( result.isEmpty() );
@@ -90,7 +91,7 @@ class ApplicationTest {
     @DisplayName( "test buildWords(): good case with given word 'bowl'" )
     void testMethodBuildWords() {
 
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup();
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( new File( "src/main/test/resources/english_words_alpha.txt" ) );
         List<String> result = anagramByWordlistLookup.buildWords( "bowl" );
         Assertions.assertFalse( result.isEmpty() );
         assertEquals( 24, result.size() );
@@ -124,8 +125,9 @@ class ApplicationTest {
     @Test
     @DisplayName( "test getWordlistContent(): invalid file path")
     void testGetWordlistContentWithInvalidPath() {
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( new File("a/b/c/d" ) );
 
-        Throwable exception = assertThrows( FileNotFoundException.class, ()-> AnagramByWordlistLookup.getWordlistContent("a/b/c/d") );
+        Throwable exception = assertThrows( FileNotFoundException.class, anagramByWordlistLookup::getWordlistContent );
         assertEquals("File could not be found.", exception.getMessage() );
     }
 
@@ -133,7 +135,9 @@ class ApplicationTest {
     @DisplayName( "test getWordlistContent(): invalid file path")
     void testGetWordlistContentWithPathToDirectory() {
 
-        Throwable exception = assertThrows( FileNotFoundException.class, ()-> AnagramByWordlistLookup.getWordlistContent("src/main/test/resources/") );
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( new File("src/main/test/resources/" ) );
+
+        Throwable exception = assertThrows( FileNotFoundException.class, anagramByWordlistLookup::getWordlistContent );
         assertEquals("File could not be found.", exception.getMessage() );
     }
 
@@ -141,7 +145,9 @@ class ApplicationTest {
     @DisplayName( "test getWordlistContent(): empty file")
     void testGetWordlistContentWithEmptyFile() {
 
-        Throwable exception = assertThrows( IllegalArgumentException.class, ()-> AnagramByWordlistLookup.getWordlistContent("src/main/test/resources/empty.txt") );
+        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( new File("src/main/test/resources/empty.txt" ) );
+
+        Throwable exception = assertThrows( IllegalArgumentException.class, anagramByWordlistLookup::getWordlistContent );
         assertEquals("The file received is empty.", exception.getMessage() );
     }
 
