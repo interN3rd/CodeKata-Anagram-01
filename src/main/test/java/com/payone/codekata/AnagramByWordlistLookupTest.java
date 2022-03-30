@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DisplayName( "AnagramTest" )
-class ApplicationTest {
+class AnagramByWordlistLookupTest {
 
     @ParameterizedTest
     @CsvSource(value = {
