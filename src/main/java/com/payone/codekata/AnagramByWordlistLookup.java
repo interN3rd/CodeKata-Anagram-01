@@ -1,33 +1,53 @@
 package com.payone.codekata;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class AnagramByWordlistLookup implements AnagramFinder {
 
-    private static final Pattern PATTERN = Pattern.compile("^[A-Za-z ]+$");
+    private static final Pattern PATTERN = Pattern.compile( "^[A-Za-z ]+$" );
+    private final List<String> unfilteredWordlist;
 
-    private final File textFile;
+    public AnagramByWordlistLookup( List<String> unfilteredWordlist ) {
 
-    public AnagramByWordlistLookup( File textFile ) {
-
-        this.textFile = textFile;
+        this.unfilteredWordlist = unfilteredWordlist;
     }
 
-    static Logger logger;
+    private String validateAnagramCandidate( final String word ) {
+
+        if( word == null ) {
+
+            throw new IllegalArgumentException( "A value of 'null' was received." );
+        }
+
+        if( word.trim().isEmpty() ) {
+
+            throw new IllegalArgumentException( "No character was received." );
+        }
+
+        if( word.length() > 27 ) {
+
+            throw new IllegalArgumentException( "Received an unexpected value. The longest known word to have anagrams consists of 27 characters." );
+        }
+
+        if( !PATTERN.matcher( word ).find() ) {
+
+            throw new IllegalArgumentException( "A non-alphabetical character was received." );
+        }
+
+        return word.trim().toLowerCase();
+    }
 
     /**
      *
-     * @param word should consists of one or mor ASCII character signs
+     * @param word should consist of one or mor ASCII character signs
      * @return an empty ArrayList<>() if the given word could not have or does not have any anagrams
      *     could not have: single characters, fantasy words or random input like apoigfnwui
      *     does not have: existing words like 'hello' or 'extinguisher'
      */
-    public List<String> findAnagrams( final String word ) throws FileNotFoundException {
+    public List<String> findAnagrams( final String word ) {
 
         String anagramCandidate = validateAnagramCandidate( word );
 
@@ -39,8 +59,10 @@ public class AnagramByWordlistLookup implements AnagramFinder {
         }
 
         // anagrams are found by looking up entries of a wordlist. There has to be a wordlist accessible then
-        List<String> wordList = getWordlistContent();
-        validateWordlistContent( wordList );
+        List<String> filteredWordlist = this.unfilteredWordlist.stream()
+                .filter( line -> PATTERN.matcher( line ).matches() )
+                .map( String::toLowerCase )
+                .collect( Collectors.toList() );
 
         // create every possible letter combination of the word that the user typed in
         List<String> possibleAnagrams = buildWords( anagramCandidate );
@@ -55,9 +77,9 @@ public class AnagramByWordlistLookup implements AnagramFinder {
         // example: if the user types in "owl" an anagram would be "low"
         // both words should be in the wordlist
         // therefore: if the word doesn't even come up in the wordlist, there will be no anagram
-        if( wordList.contains( anagramCandidate ) ) {
+        if( filteredWordlist.contains( anagramCandidate ) ) {
             for ( String anagram : possibleAnagrams ) {
-                if ( wordList.contains( anagram ) ) {
+                if ( filteredWordlist.contains( anagram ) ) {
                     anagrams.add( anagram );
                 }
             }
@@ -98,73 +120,5 @@ public class AnagramByWordlistLookup implements AnagramFinder {
             }
 
         return possibleAnagrams;
-    }
-
-    private String validateAnagramCandidate( final String word ) {
-
-        if( word == null ) {
-
-            throw new IllegalArgumentException( "A value of 'null' was received." );
-        }
-
-        if( word.trim().isEmpty() ) {
-
-            throw new IllegalArgumentException( "No character was received." );
-        }
-
-        if( word.length() > 27 ) {
-
-            throw new IllegalArgumentException( "Received an unexpected value. The longest known word to have anagrams consists of 27 characters." );
-        }
-
-        if( !PATTERN.matcher( word ).find() ) {
-
-            throw new IllegalArgumentException( "A non-alphabetical character was received." );
-        }
-
-        return word.trim();
-    }
-
-    List<String> getWordlistContent() throws FileNotFoundException {
-
-        List<String> wordList;
-
-        if( this.textFile.exists() && !this.textFile.isDirectory() ) {
-
-            if( this.textFile.length() == 0 ) {
-
-                throw new IllegalArgumentException( "The file received is empty." );
-            }
-
-            try ( FileInputStream textfile = new FileInputStream( this.textFile );
-                  InputStreamReader inputStreamReader = new InputStreamReader( textfile );
-                  BufferedReader bufferedReader = new BufferedReader( inputStreamReader ) ) {
-
-                wordList = bufferedReader.lines().collect( Collectors.toList() );
-
-                return wordList;
-
-            } catch( IOException exception ) {
-
-                logger.severe( "File could not be read." );
-            }
-
-        } else {
-
-            throw new FileNotFoundException( "File could not be found." );
-        }
-
-        return new ArrayList<>();
-    }
-
-    static void validateWordlistContent( final List<String> list ) {
-
-        for (String singleListEntry : list) {
-            
-            if (!PATTERN.matcher(singleListEntry).find()) {
-
-                throw new IllegalArgumentException("A non-alphabetical character was found in this file.");
-            }
-        }
     }
 }
