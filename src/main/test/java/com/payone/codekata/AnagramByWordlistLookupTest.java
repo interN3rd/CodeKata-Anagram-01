@@ -105,22 +105,6 @@ class AnagramByWordlistLookupTest {
     }
 
     @Test
-    @DisplayName( "test findAnagrams(): good case with given word 'rome' written in camel case and spaces" )
-    void testMethodFindAnagramsOfRomeInCamelCaseAndSpaces() throws IOException {
-
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( Files.readAllLines( Paths.get("src/main/test/resources/english_words_alpha.txt" ) ) );
-        List<String> result = anagramByWordlistLookup.findAnagrams( " R o M e   " );
-        // Verarbeitung von unerwartetem Input abbrechen / eingabe ablehnen
-
-        Assertions.assertFalse( result.isEmpty() );
-        assertEquals( 3, result.size() );
-        Assertions.assertTrue( result.contains( "omer" ) );
-        Assertions.assertTrue( result.contains( "more" ) );
-        Assertions.assertTrue( result.contains( "mero" ) );
-        Assertions.assertFalse( result.contains( "anythingOtherThanRomeStuff" ) );
-    }
-
-    @Test
     @DisplayName( "test buildWords(): good case with given word 'bowl'" )
     void testMethodBuildWords() throws IOException {
 
