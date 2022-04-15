@@ -8,11 +8,24 @@ import java.util.stream.Collectors;
 public class AnagramByWordlistLookup implements AnagramFinder {
 
     private static final Pattern PATTERN = Pattern.compile( "^[A-Za-z ]+$" );
+
     private final List<String> unfilteredWordlist;
+    //Wordlist im Konstruktor initialisieren: kann final sein, anfällig beim Deserialisieren, weil beim Deserialisieren der Konstruktor aufgerufen wird
+    //Als Methode: Logik aus Konstruktor raushalten
+    private final List<String> filteredWordlist = new ArrayList<>();
 
     public AnagramByWordlistLookup( List<String> unfilteredWordlist ) {
 
         this.unfilteredWordlist = unfilteredWordlist;
+    }
+
+    private List<String> filterWordlist( List<String> unfilteredWordlist ) {
+        //testen
+
+        return unfilteredWordlist.stream()
+                .filter( line -> PATTERN.matcher( line ).matches() )
+                .map( String::toLowerCase )
+                .collect( Collectors.toList() );
     }
 
     private String validateAnagramCandidate( final String word ) {
@@ -59,10 +72,10 @@ public class AnagramByWordlistLookup implements AnagramFinder {
         }
 
         // anagrams are found by looking up entries of a wordlist. There has to be a wordlist accessible then
-        List<String> filteredWordlist = this.unfilteredWordlist.stream()
-                .filter( line -> PATTERN.matcher( line ).matches() )
-                .map( String::toLowerCase )
-                .collect( Collectors.toList() );
+        if( this.filteredWordlist.isEmpty() ) {
+
+            this.filteredWordlist.addAll( filterWordlist( this.unfilteredWordlist ) );
+        }
 
         // create every possible letter combination of the word that the user typed in
         List<String> possibleAnagrams = buildWords( anagramCandidate );

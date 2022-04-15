@@ -110,6 +110,7 @@ class AnagramByWordlistLookupTest {
 
         AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( Files.readAllLines( Paths.get("src/main/test/resources/english_words_alpha.txt" ) ) );
         List<String> result = anagramByWordlistLookup.findAnagrams( " R o M e   " );
+        // Verarbeitung von unerwartetem Input abbrechen / eingabe ablehnen
 
         Assertions.assertFalse( result.isEmpty() );
         assertEquals( 3, result.size() );
