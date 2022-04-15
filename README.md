@@ -1,6 +1,18 @@
-# code kata: Anagram 1
+# codekata: Anagram
 
-Inspired by: http://codekata.com/kata/kata06-anagrams/
+Inspiriert durch: http://codekata.com/kata/kata06-anagrams/
 
-This code kata was solved by myself. Its code is reviewed by collaborators of this repository.
+## Agenda
+### Wortliste initialisieren
+```java
+private final List<String> unfilteredWordlist;
+```
+* Wordlist im Konstruktor initialisieren: kann final sein, anfällig beim Deserialisieren, weil beim Deserialisieren der Konstruktor aufgerufen wird
+    * Als Methode: Logik aus Konstruktor raushalten
+___
+```java
+    private List<String> filterWordlist( List<String> unfilteredWordlist ) {
+```
+* testen
+___
 

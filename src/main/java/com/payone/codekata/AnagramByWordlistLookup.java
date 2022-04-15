@@ -8,10 +8,7 @@ import java.util.stream.Collectors;
 public class AnagramByWordlistLookup implements AnagramFinder {
 
     private static final Pattern PATTERN = Pattern.compile( "^[A-Za-z ]+$" );
-
     private final List<String> unfilteredWordlist;
-    //Wordlist im Konstruktor initialisieren: kann final sein, anfällig beim Deserialisieren, weil beim Deserialisieren der Konstruktor aufgerufen wird
-    //Als Methode: Logik aus Konstruktor raushalten
     private final List<String> filteredWordlist = new ArrayList<>();
 
     public AnagramByWordlistLookup( List<String> unfilteredWordlist ) {
@@ -20,7 +17,6 @@ public class AnagramByWordlistLookup implements AnagramFinder {
     }
 
     private List<String> filterWordlist( List<String> unfilteredWordlist ) {
-        //testen
 
         return unfilteredWordlist.stream()
                 .filter( line -> PATTERN.matcher( line ).matches() )
