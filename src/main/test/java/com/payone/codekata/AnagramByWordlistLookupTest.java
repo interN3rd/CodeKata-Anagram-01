@@ -29,7 +29,7 @@ class AnagramByWordlistLookupTest {
     @DisplayName( "test method findAnagrams() with invalid anagram candidates" )
     void testValidationOfInvalidAnagramCandidates( String invalidAnagramCandidate, final String expectedErrorMsg ) throws IOException {
 
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( Files.readAllLines( Paths.get("src/main/test/resources/english_words_alpha.txt" ) ) );
+        AnagramByWordlistLookup anagramByWordlistLookup = AnagramByWordlistLookup.createAnagramByWordlistLookup( Files.readAllLines( Paths.get("src/main/test/resources/english_words_alpha.txt" ) ) );
 
         Throwable exception = assertThrows( IllegalArgumentException.class, ()-> anagramByWordlistLookup.findAnagrams( invalidAnagramCandidate ) );
 
@@ -40,7 +40,7 @@ class AnagramByWordlistLookupTest {
     @DisplayName( "test findAnagrams(): good case with given word 'left'" )
     void testMethodFindAnagramsOfLeft() throws IOException {
 
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( Files.readAllLines( Paths.get("src/main/test/resources/english_words_alpha.txt" ) ) );
+        AnagramByWordlistLookup anagramByWordlistLookup = AnagramByWordlistLookup.createAnagramByWordlistLookup( Files.readAllLines( Paths.get("src/main/test/resources/english_words_alpha.txt" ) ) );
         List<String> result = anagramByWordlistLookup.findAnagrams( "left" );
 
         Assertions.assertFalse( result.isEmpty() );
@@ -54,7 +54,7 @@ class AnagramByWordlistLookupTest {
     @ValueSource( strings = { "a", "hello", "yadayada" } )
     void testMethodFindAnagramsShouldReturnEmptyResult( final String anagramCandidate ) throws IOException {
 
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( Files.readAllLines( Paths.get("src/main/test/resources/english_words_alpha.txt" ) ) );
+        AnagramByWordlistLookup anagramByWordlistLookup = AnagramByWordlistLookup.createAnagramByWordlistLookup( Files.readAllLines( Paths.get("src/main/test/resources/english_words_alpha.txt" ) ) );
         List<String> result = anagramByWordlistLookup.findAnagrams( anagramCandidate );
         Assertions.assertTrue( result.isEmpty() );
     }
@@ -63,7 +63,7 @@ class AnagramByWordlistLookupTest {
     @DisplayName( "test findAnagrams(): good case with given word 'rome' and leading empty spaces" )
     void testMethodFindAnagramsOfRomeWithLeadingSpaces() throws IOException {
 
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( Files.readAllLines( Paths.get("src/main/test/resources/english_words_alpha.txt" ) ) );
+        AnagramByWordlistLookup anagramByWordlistLookup = AnagramByWordlistLookup.createAnagramByWordlistLookup( Files.readAllLines( Paths.get("src/main/test/resources/english_words_alpha.txt" ) ) );
         List<String> result = anagramByWordlistLookup.findAnagrams( "   rome" );
 
         Assertions.assertFalse( result.isEmpty() );
@@ -78,7 +78,7 @@ class AnagramByWordlistLookupTest {
     @DisplayName( "test findAnagrams(): good case with given word 'rome' and trailing empty spaces" )
     void testMethodFindAnagramsOfRomeWithTrailingSpaces() throws IOException {
 
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( Files.readAllLines( Paths.get("src/main/test/resources/english_words_alpha.txt" ) ) );
+        AnagramByWordlistLookup anagramByWordlistLookup = AnagramByWordlistLookup.createAnagramByWordlistLookup( Files.readAllLines( Paths.get("src/main/test/resources/english_words_alpha.txt" ) ) );
         List<String> result = anagramByWordlistLookup.findAnagrams( "rome  " );
 
         Assertions.assertFalse( result.isEmpty() );
@@ -93,7 +93,7 @@ class AnagramByWordlistLookupTest {
     @DisplayName( "test findAnagrams(): good case with given word 'rome' written in camel case" )
     void testMethodFindAnagramsOfRomeInCamelCase() throws IOException {
 
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( Files.readAllLines( Paths.get("src/main/test/resources/english_words_alpha.txt" ) ) );
+        AnagramByWordlistLookup anagramByWordlistLookup = AnagramByWordlistLookup.createAnagramByWordlistLookup( Files.readAllLines( Paths.get("src/main/test/resources/english_words_alpha.txt" ) ) );
         List<String> result = anagramByWordlistLookup.findAnagrams( "RoMe" );
 
         Assertions.assertFalse( result.isEmpty() );
@@ -108,7 +108,7 @@ class AnagramByWordlistLookupTest {
     @DisplayName( "test buildWords(): good case with given word 'bowl'" )
     void testMethodBuildWords() throws IOException {
 
-        AnagramByWordlistLookup anagramByWordlistLookup = new AnagramByWordlistLookup( Files.readAllLines( Paths.get("src/main/test/resources/english_words_alpha.txt" ) ) );
+        AnagramByWordlistLookup anagramByWordlistLookup = AnagramByWordlistLookup.createAnagramByWordlistLookup( Files.readAllLines( Paths.get("src/main/test/resources/english_words_alpha.txt" ) ) );
         List<String> result = anagramByWordlistLookup.buildWords( "bowl" );
         Assertions.assertFalse( result.isEmpty() );
         assertEquals( 24, result.size() );
