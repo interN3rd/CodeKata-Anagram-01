@@ -12,6 +12,8 @@ public class AnagramByWordlistLookup implements AnagramFinder {
     private final List<String> filteredWordlist = new ArrayList<>();
     private String key;
 
+    /** @param unfilteredWordlist wird von der Library gefiltert*/
+    // Factory-Methode, um sicherzustellen, dass das Objekt mit einer gefilterten Wordlist initialisiert ist
     public AnagramByWordlistLookup( List<String> unfilteredWordlist, String key ) {
 
         this.unfilteredWordlist = unfilteredWordlist;
@@ -36,7 +38,7 @@ public class AnagramByWordlistLookup implements AnagramFinder {
             return new ArrayList<>();
         }
 
-        if( this.key.equals( "filtered") ) {
+        if( this.key.equals( "filtered" ) ) {
 
             // create every possible letter combination of the word that the user typed in
             List<String> possibleAnagrams = buildWords( anagramCandidate );
@@ -77,6 +79,7 @@ public class AnagramByWordlistLookup implements AnagramFinder {
         // anagrams are found by looking up entries of a wordlist. There has to be a wordlist accessible then
         if( this.filteredWordlist.isEmpty() ) {
 
+            // für die Zukunft beachten: Mögliches Synchronisierungsproblem, wenn zwei Requests dieselben Methode ausführen wollen (Race Condition)
             this.filteredWordlist.addAll( filterWordlist( this.unfilteredWordlist ) );
         }
 
