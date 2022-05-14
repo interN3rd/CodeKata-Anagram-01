@@ -16,7 +16,7 @@ public class AnagramByWordlistLookup implements AnagramFinder {
         this.wordlist = filteredWordlist;
     }
 
-    public static AnagramByWordlistLookup createAnagramByWordlistLookup( List<String> wordlist ) {
+    public static AnagramByWordlistLookup create( List<String> wordlist ) {
 
         return new AnagramByWordlistLookup( wordlist.stream()
                 .filter( line -> PATTERN.matcher( line ).matches() )
